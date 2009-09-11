@@ -1,0 +1,234 @@
+[v2.1.2] 2007-xx <br@frankinkiz.polytechnique.fr>
+    * Détection de la langue du système au premier démarrage [Fruneau]
+
+  Notifier :
+    * Support de QSystemTrayIcon pour les notifications [Fruneau]
+
+  Xnet :
+    * Utilisation du hash MD5 de Qt [Fruneau]
+
+[v2.1.1] 2007-04 <br@frankiz.polytechnique.fr>
+    * Bugfix: Trayicon pour les macs [Fruneau]
+    * Bugfix: Installation de packaging de qRezix [totom]
+    * Bugfix: Changement de la porte de transfert de fichiers pour être compatible avec l'InfoBR [jp]
+
+[v2.1.0] 2007-04 <br@frankiz.polytechnique.fr>
+    * Port de la trayicon en Qt 4 [GUI]
+    * Mise à jour des traductions [GUI]
+    * Fin du port en Qt4 [GUI]
+    * Bugfix : compilation avec GCC 4.1 [Fruneau]
+    * Support des Universal Binaries pour MacOS X (déjà appliqué au packaging de la 2.0.1) [Fruneau]
+    * Bugfix : crash à la fermeture si une fenêtre de chat est ouverte [Fruneau]
+    * Ajout du numéro de portable dans les propriétés [Fruneau]
+    * Suppression de memory leaks [Fruneau]
+    * Amelioration de la gestion du menu (MacOS) et des actions [Fruneau]
+    * Ajout d'un menu action permettant d'interagir sans la mainui [Fruneau]
+    * Ajout d'un menu Window sous Mac (conformément aux Apple's GUIdelines) [Fruneau]
+    * Bugfix : comportement de la touche Enter dans les préférences [Fruneau]
+
+  Bob :
+    * Intégration du module de notification d'ouverture du Bob [GUI]
+
+  Notifier :
+    * Support de Growl pour les notifications sur MacOS X [Fruneau]
+    * Ajout de notifications sur la réception de messages de chat [Fruneau]
+    * Bugfix : Icone non valide lors des test si l'icone locale n'est pas definie [Fruneau]
+
+  Chat :
+    * Ajout du transfert de fichiers [GUI]
+    * Bugfix : crash lors du check de l'historique d'une personne déconnectée [Fruneau]
+    * Bugfix : envoie des messages multiligne conforme au protocole xNet [Fruneau]
+    * Enregistrement de l'historique au fur et a mesure de la discussion [Fruneau]
+    * Bugfix : affichage correcte de la notification de reconnexion [Fruneau]
+    * Nouveau raccourcis claviers (Ctrl+W fermer, Ctrl+F formatage) [Fruneau]
+    * Bugfix : mise à jour de l'icône locale [Fruneau]
+
+  MainUI :
+    * RzxRezal : Ajout d'un TYP_TOOL pour avoir un bouton rélatif au Rezal dans la barre d'outils [GUI]
+    * Recherche avancée en plain-text sur les propriétés en plus du pseudo [Fruneau]
+    * Cache le détails des propriétés lorsque ce n'est pas applicable à la sélection [Fruneau]
+    * Correction de quelques correspondance ip/casert [Fruneau]
+    * Ajout de colonnes Nom/Prénom remplies à l'aide des propriétés [Fruneau]
+    * Utilisation de références dynamiques au nombre de colonnes dans les rezals [Fruneau]
+    * Suppression de la catégorie Autres [Fruneau]
+    * Bugfix : freeze au changement de traduction [Fruneau]
+    * Bugfix : Comportement de la carte dans les cas hybride (subnets/pas subnets) [Fruneau]
+    * Evite d'afficher le " \\n " des commentaires multilignes [Fruneau]
+    * Bugfix : rafraîchissement de la fenêtre en cas de minimisation [bernardofpc]
+
+[v2.0.1] 2006-04 <br@frankiz.polytechnique.fr>
+    * Bugfixes
+    * Bufferisation des messages en cas d'absence [Fruneau]
+    * Mise à jour des attributions IP-casert [Fruneau]
+
+[v2.0.0] 2006-02 <br2003@frankiz.polytechnique.fr>
+    * Possibilité de gérer des groupes d'utilisateurs personnalisés [Fruneau]
+    * Quick Action via le menu contextuel du systray [Fruneau, bernardofpc]
+    * Utilisation des propriétés de l'utilisateur pour permettre l'envoie de mail [Fruneau]
+    * URL cliquables dans le chat [Fruneau]
+    * Correction et amélioration des textes [GUI]
+    * Traduction des propriétés [Fruneau]
+    * Enregistrement des préférences dans HKCU et non plus HKLM [Fruneau]
+    * Ajout-Suppression des favoris/bannis par glisser-lacher [Fruneau]
+    * Désactivation des notifications lorsqu'on est marqué away [Fruneau]
+    * Adaptation automatique de la trayicon à son environnement [Fruneau]
+    * Actions en cliquant sur la fenêtre de notification (gauche=fermeture, droit=chat) [Fruneau]
+    * Fenêtre d'accueil lors du premier démarrage [Fruneau]
+    * Réorganisation et nouvelles fonctionnalités de la fenêtre de préférences [Fruneau]
+    * Emulation des commentaires sur plusieurs lignes [Fruneau]
+    * Gestion des favoris.bannis via les préférences [Fruneau]
+    * Nouvelle colonne Imprimante [Fruneau, Idée de sean]
+    * Intégration des smileys au module de chat [pico]
+    * Changement dynamique de thème Qt [Fruneau]
+    * Module RzxRezalMap [Fruneau]
+    * Module RzxRezalDetail [Fruneau]
+    * Migration en Qt4 [Fruneau, GUI]
+    * Restructuration et modularisation du programme [Fruneau]
+    * Interface jabber [pico]
+
+[v1.6.4] 2005-09 <br2003@frankiz.polytechnique.fr>
+    * Cache des propriétés [Fruneau]
+    * Passage au protocole xNet 4.0 [Fruneau]
+    * Intégration du menu préférences [Fruneau]
+    * Bugfixes
+
+[v1.6.3] 2005-05 <br2003@frankiz.polytechnique.fr>
+    * Fenêtre de préférence listbox/windowsstack [Fruneau]
+    * Correction du bug qui bouffe 100% proc en cas de déconnexion [Fruneau]
+    * Choix de la taille de la trayicon sous linux [Fruneau]
+    * Meilleur intégration sur MacOS X [gZeus]
+
+[v1.6.2] 2005-02 <br2003@frankiz.polytechnique.fr>
+    * Autocompletion sur le nick (touche TAB) [Fruneau]
+    * Aide contextuelle dans la fenêtre princpale [Fruneau]
+    * Ajout de la dans le tooltip des fonctionnalités du client [Fruneau]
+    * Ajout d'une donnée localisation (tooltip et colonne) [Fruneau]
+    * Ajout des colonnes IP et Client [Fruneau]
+    * Correction des composantes alpha des icônes [Ey]
+    * Choix entre deux types de répondeur [Fruneau]
+    * Désactivation des plug-ins [Fruneau]
+    * Fix de nombreux bugs et memory leaks [Fruneau]
+    * Ajout des ebuild pour gentoo [Ey, Fruneau]
+
+[v1.6.1] 2004-10 <br2003@frankiz.polytechnique.fr>
+    * Ajout d'une fenêtre de notification du changement d'état des favoris [Fruneau]
+    * Notification du nombre de message non lus [Fruneau]
+    * Notification de la frappe d'un message par l'autre utilisateur (proto de Moi) [Fruneau]
+    * Ajout d'une ignore List par IP [Steak]
+    * Ajout de tooltips sur les RzxItem [Fruneau]
+    * Ajout de la couleur dans les boites d'édition [Steak]
+    * Buffering de l'affichage des nouveaux connectés [Steak]
+    * Son pour prévenir de la connexion d'un favori [Steak]
+
+[v1.5] 2004-09-17 <br2002@frankiz.polytechnique.fr>
+    * Ajout d'un outils de recherche [Fruneau]
+    * Hashage md5 des mots de passe [Alyx]
+    * Mise à jour des Makefile [Pico]
+    * Bugfix pour les systèmes 64bits [Fruneau]
+    * Réorganisation de la fenêtre des propriétés [Fruneau]
+    * Changement du mot de passe [Fruneau]
+    * Restructuration du code pour une plus grande portabilité [Fruneau]
+    * Ajout d'un 'highlight' de l'item sélectionné lors de l'affichage en 32x32 (idée de Kikx) [Fruneau]
+
+[v1.3.666] 2004-08-24 <br2002@frankiz.polytechnique.fr>
+    * La trayicon change lorsque l'on passe en away [Pico]
+    * Affichage des propriétés et de l'historique dépendamment de la fenêtre de chat [Fruneau]
+    * Ajout d'un message d'un ping-pong pour le DCC en tapant "/ping" [Fruneau]
+    * Ajout d'une classe propre pour la gestion de la connexion DCC [Fruneau]
+    * Interface plus conviviale avec extension des thèmes d'icônes au menu [Fruneau]
+    * Ajout de la date à l'historique... c'est plus pratique [Fruneau]
+    * Bloquage de qRezix si les données personnelles ne sont pas rentrées [Fruneau]
+    * Changement de la trayicon pour qu'elle s'intègre correctement avec Gnome [Pico, Fruneau]
+    * Changement du format de stockage des configurations en QSettings (c plus pratique et plus portable) [Fruneau]
+    * Ajout du structure d'accueil de plug-ins [Fruneau]
+    * Passage du peer-to-peer en TCP [Fruneau]
+    * Ajout du choix de client ftp, http, news personnalisé [NC]
+    * Ajout de la détection automatique des serveurs ftp, http, news et samba [Fruneau]
+    * Ajout d'une boîte de dialogue à la fermeture du client [Fruneau]
+    * Utilisation d'un QTextEdit dérivé au lieu du MultiEdit obsolete, Shift+enter pr changer de ligne [Steak]
+    * Sauvegarde du pass quand il est reçu du serveur [Steak]
+    * Bugfixes pour Windows [Fruneau@br2k3]
+    * Makefile pour Windows [Fruneau]
+    * Ajout repondeur dans menu TrayIcon [Steak]
+    * Ajout des warnings à l'envoi des propriétés [Steak]
+    * Plus d'étoile avec le /me, chgt de couleur en plus [Falco]
+    * Problème du titre de la fenetre réglé [Fruneau]
+    * Ajout d'une historique accessible à l'édition par shift up/down, comme sur IRC [Steak]
+    * Edition HTML simplifiée avec choix des polices et des styles [Steak]
+
+[v1.3] 2004-05-01 <br2002@frankiz.polytechnique.fr>
+    * bug des sons fixés pour Linux   [Steak]
+      (choix du son et de la commande)
+    * Ajustement automatique des colonnes [Steak]
+    * Reimplémentation complète des actions du clavier dans le ListView/RzxRezal [Steak]
+    * Nouveau comportement dans la fenetre de chat pour Enter/Return [Steak]
+    * Suppression de la colonne HotLine [Steak]
+    * Utilisation des constantes RzxRezal.col... au lieu des numéros des colonnes [Steak]
+    * Bouton dans la fenetre de chat pour couper/remettre le son [Steak]
+    * Gestion de lftp en plus de gftp avec ouverture de console [Steak, ZyGot]
+    * Icones thématisées rajoutées pour le bouton du son + ajout dans le make install [Steak, Kikx]
+    * Bugfixs pour le multilinguisme (sport, chargt des qm) [Steak]
+
+[v1.2] 2003 <br2001@frankiz.polytechnique.fr>
+    * JiBee Mais je sais pas ce qu'il a fait, il l'a pas écrit :) [Steak]
+    * par contre y'a des restes dans le code, pr les courageux
+
+[v1.1] 2002-04-06 <br2000@frankiz.polytechnique.fr>
+    * sons [Trasfract, MadCoder]
+    * history [TrasFract]
+    * favoris [TrasFract]
+    * répondeur [Trasfract]
+    * prefs la première fois [TrasFract]
+
+[v1.0] 2002-03-04 <br2000@frankiz.polytechnique.fr>
+    
+    * rep par défaut sous Windows [trasfract]
+    * thèmes : c'est bon [Trasfract]
+    * ajout des sports [Trasfract]
+    * Browser de répertoires [TrasFract]
+    * choix du rep par defaut du ftp et utilisation pour linux [MadCoder]
+    * systray pour windows9x [TrasFract]
+    * bugfix : colonne des icones [TrasFract]
+    * bugfix : autochat désactivé [TrasFract]
+
+[v0.3] 2002-02-25 <br2000@frankiz.polytechnique.fr>
+
+    * réduire la fenètre à linker à "systrayiser" au lieu de réduire ... [Trasfract :)]
+    * option pour utiliser/ne pas utiliser le systray (surtout pour les linuxiens) [MadCoder]
+    * effacemet des icones [Trasfract]
+    * problèmes de registres réglés pour Win9X [Trasfract]
+    * fenêtre de propriétés : dimensionnement intelligent + Layout [MadCoder]
+    * Systray pour linux [MadCoder]
+    * sauvegarde des dimensions [Trasfract]
+    * thèmes d'icones, première implémentation [MadCoder]
+    * modification de l'interface de propriétés en vue des upgrades et pour le répondeur [MadCoder]
+    * icones «personnalisées» [Trasfract]
+    * bugfix: redimmensionnement des fenêtres de propriétés [Mummy]
+    * bugfix: page web [MadCoder]
+    * détection auto de l'OS et du localhost [Mummy]
+
+2002-02-22 <br2000@frankiz.polytechnique.fr>
+    
+    * les icones s'enregistrent toujours dans leur format d'origine
+(corrige le bug des icones en 16 couleurs de Manao) [Doudou]
+
+[v0.2] 2002-02-20 <br2000@frankiz.polytechnique.fr>
+
+    * icône [Trasfract]
+    * systray [Trasfract]
+    * code pour pas afficher les lignes de prefs vides et resizer la fenêtre. [MadCoder]
+    * envoi/réception des préférences [Mummy]
+    * bugfix : messages vides non envoyables. [MadCoder]
+    * bugfix : touche esc pour les fenêtres de chat [MadCoder]
+    * bugfix : clic droit sur les en-têtes de colonne. [Trasfract]
+    * ordre de tabulation  [MadCoder]
+    * gestion de l'arborescence .rezix/icones si ca existe pas  [MadCoder]
+    * détection automatique du hostname pour linux [MadCoder]
+    * redimensionnement de la zone de saisie du chat [MadCoder]
+    * choix des outils (ftp, news, http) [Trasfract]
+    * la focus du chat est automatiquement donné à la bonne "case" [MadCoder]
+
+[v0.1] 2002-01-30  <sylvain.joyeux@polytechnique.fr>
+
+    * Ajouté les icones pour les serveurs et pour l'OS, à copier de icones/ dans RzxConfig::icones
+    * Chat: ctrl+enter marche, la fenetre ne revient plus tout en haut quand elle est pleine
