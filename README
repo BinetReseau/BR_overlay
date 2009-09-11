@@ -1,0 +1,3 @@
+Put ebuilds here, in a cat/pkgname dir : qrezix-0.2.3.ebuild goes into net-im/qrezix/qrezix-0.2.3.ebuild
+
+You can add other stuff too - metadata.xml (pkg description), Changelog, ...
