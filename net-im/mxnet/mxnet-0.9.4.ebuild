@@ -8,7 +8,7 @@ SRC_URI="ftp://miroir.eleves.polytechnique.fr/xshare/mxnet-0.9.4.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="x86 ~amd64"
 IUSE=""
 
 DEPEND="sys-libs/readline
