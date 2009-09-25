@@ -1,0 +1,22 @@
+#!/sbin/runscript
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting ircd"
+    cd /var/run/ircd
+#	. /usr/bin/tsocks on
+	start-stop-daemon --start --quiet --exec /usr/bin/ircd --chuid ircd:ircd -- -f /etc/ircd/ircd.conf
+#	start-stop-daemon --start --quiet \
+#		--exec /usr/bin/tsocks --chuid irc:irc -- /home/irc/bin/ircd -f /home/irc/bin/ircd.conf
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping ircd"
+	start-stop-daemon --stop --quiet --pidfile /var/run/ircd/ircd.pid
+	eend $?
+}
+

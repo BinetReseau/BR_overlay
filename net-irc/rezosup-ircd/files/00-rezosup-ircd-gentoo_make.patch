@@ -1,0 +1,57 @@
+--- ./configure.orig	2009-09-16 15:41:40.000000000 +0200
++++ ./configure	2009-09-16 15:42:49.000000000 +0200
+@@ -10,13 +10,13 @@
+ ## --------------------- ##
+ 
+ ###########################################################################
+-if [ ! "$NO_INTRO" ] ; then
+-        clear
+-        more BANNER
+-        echo ""
+-else
+-        echo ""
+-fi
++#if [ ! "$NO_INTRO" ] ; then
++#        clear
++#        more BANNER
++#        echo ""
++#else
++#        echo ""
++#fi
+ 
+ echo "Beginning solid-ircd configuration."
+ echo ""
+--- ./Makefile.in.orig	2009-09-16 15:45:28.000000000 +0200
++++ ./Makefile.in	2009-09-16 16:41:05.000000000 +0200
+@@ -43,14 +43,13 @@
+ 	fi
+ 	@for i in $(SUBDIRS); do \
+ 		echo "Building $$i";\
+-		cd $$i;\
+-		${MAKE} build; cd ..;\
++		(${MAKE} -C $$i build || die "Error building $$i" );\
+ 	done
+-	@echo "******************************************************************************"
+-	@echo "* For help with solid-ircd, please refer to http://solid-ircd.com            *"
+-	@echo "* If you wan to come to our dev channel which you're more than welcome to.   *"
+-	@echo "* its irc.vidgamechat.net #Solid                                             *"
+-	@echo "******************************************************************************"
++#	@echo "******************************************************************************"
++#	@echo "* For help with solid-ircd, please refer to http://solid-ircd.com            *"
++#	@echo "* If you wan to come to our dev channel which you're more than welcome to.   *"
++#	@echo "* its irc.vidgamechat.net #Solid                                             *"
++#	@echo "******************************************************************************"
+ 
+ profile:
+ 	@for i in $(SUBDIRS); do \
+@@ -104,9 +103,7 @@
+ 		mkdir $(INSTALL_DIR); \
+ 	fi
+ 	@for i in $(INSTDIRS); do \
+-		cd $$i; \
+-		$(MAKE) install; \
+-		cd ..; \
++		$(MAKE) -C $$i install; \
+ 	done
+ 	@echo ""
+ 	cp -Ri  ssl $(INSTALL_DIR)

@@ -1,0 +1,210 @@
+diff -Nur solidircd-stable.orig/include/config.h solidircd-stable/include/config.h
+--- solidircd-stable.orig/include/config.h	2009-09-25 13:04:05.000000000 +0200
++++ solidircd-stable/include/config.h	2009-09-25 12:38:06.000000000 +0200
+@@ -256,11 +259,16 @@
+ /* File names
+  * the server will look for these files
+  */
+-#define	MPATH	"ircd.motd"
+-#define	SMPATH	"ircd.smotd"
+-#define	LPATH	"ircd.log"
+-#define	PPATH	"ircd.pid"
+-#define HPATH	"opers.txt"
++#define CONFIG_PATH     "/etc/ircd"
++#define RUN_PATH        "/var/run/ircd"
++#define LIB_PATH        "/usr/share/rezosup-ircd"
++#define LOG_PATH        "/var/log"
++#define	MPATH	CONFIG_PATH"/ircd.motd"
++#define	SMPATH	CONFIG_PATH"/ircd.smotd"
++#define	LPATH	LOG_PATH"/ircd.log"
++#define	PPATH	RUN_PATH"/ircd.pid"
++#define HPATH	CONFIG_PATH"/opers.txt"
++
+ 
+ 
+ /* Services Definitions */
+diff -Nur solidircd-stable.orig/src/dh.c solidircd-stable/src/dh.c
+--- solidircd-stable.orig/src/dh.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/dh.c	2009-09-25 12:38:06.000000000 +0200
+@@ -119,7 +123,7 @@
+            RAND_SRC, strerror(errno));
+     printf("ircd needs a %d byte random seed.\n", RAND_BYTES);
+     printf("You can place a file containing random data called"
+-           " .ircd.entropy\nin the directory with your ircd.conf."
++           " .ircd.entropy\nin the " RUN_PATH " directory."
+            " This file must be at least %d bytes\n", RAND_BYTES);
+     printf("long and should be suitably random.\n");
+ }
+@@ -173,10 +177,10 @@
+     printf("Done.\n");
+     fclose(fp);
+ 
+-    fp = fopen(".ircd.entropy", "w");
++    fp = fopen(RUN_PATH"/.ircd.entropy", "w");
+     if(!fp)
+     {
+-        printf("Could not open .ircd.entropy for writing: %s\n", 
++        printf("Could not open "RUN_PATH"/.ircd.entropy for writing: %s\n", 
+                 strerror(errno));
+         return 0;
+     }
+@@ -184,7 +188,7 @@
+     fwrite(randbuf, RAND_BYTES * 4, 1, fp);
+     fclose(fp);
+ 
+-    RAND_load_file(".ircd.entropy", -1);
++    RAND_load_file(RUN_PATH"/.ircd.entropy", -1);
+ 
+     return 1;
+ }
+@@ -194,7 +198,7 @@
+     int ret;
+     time_t now;
+ 
+-    ret = RAND_load_file(".ircd.entropy", -1);
++    ret = RAND_load_file(RUN_PATH"/.ircd.entropy", -1);
+     if(ret <= 0)
+     {
+         if(!make_entropy())
+@@ -208,7 +212,7 @@
+     /* this is probably not too good, but it saves just writing
+        the whole state back to disk with no changes. */
+     RAND_seed(&now, 4); 
+-    RAND_write_file(".ircd.entropy");
++    RAND_write_file(RUN_PATH"/.ircd.entropy");
+ 
+     return 0;
+ }
+diff -Nur solidircd-stable.orig/src/glines.c solidircd-stable/src/glines.c
+--- solidircd-stable.orig/src/glines.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/glines.c	2009-09-25 13:02:32.000000000 +0200
+@@ -471,7 +471,7 @@
+     journalcount = 0;
+ 
+     /* open a compaction file to dump all active glines to */
+-    ircsnprintf(buf1, sizeof(buf1), "%s/.glines_c", dpath);
++    ircsnprintf(buf1, sizeof(buf1), RUN_PATH"/.glines_c");
+     newfile = open(buf1, O_WRONLY|O_CREAT|O_TRUNC, 0700);
+     if (newfile < 0)
+     {
+@@ -548,7 +548,7 @@
+     char buf1[1024];
+     FILE *jf;
+ 
+-    ircsnprintf(journalfilename, sizeof(journalfilename), "%s/.glines", dpath);
++    ircsnprintf(journalfilename, sizeof(journalfilename), RUN_PATH"/.glines");
+ 
+     if (journal >= 0)
+     {
+diff -Nur solidircd-stable.orig/src/ircd.c solidircd-stable/src/ircd.c
+--- solidircd-stable.orig/src/ircd.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/ircd.c	2009-09-25 12:38:06.000000000 +0200
+@@ -200,7 +202,7 @@
+ #ifdef  USE_SYSLOG
+     (void) syslog(LOG_CRIT, "Server killed By SIGTERM");
+ #endif
+-    ircsprintf(tmp, "%s/.maxclients", dpath);
++    ircsprintf(tmp, RUN_PATH"/.maxclients");
+     fp=fopen(tmp, "w");
+     if(fp!=NULL) 
+     {
+@@ -788,14 +790,16 @@
+ 
+     get_paths(myargv[0]);
+ 
+-    if(chdir(dpath))
++
++    if(chdir(RUN_PATH))
+     {
+-        printf("Error changing directory to ircd.conf location\n");
++        printf("Error changing directory to running dir\n");
+         printf("Server not started\n");
+         exit(0);
+     }
+ 
+-    ircsprintf(tmp, "%s/.maxclients", dpath);
++
++    ircsprintf(tmp, RUN_PATH"/.maxclients");
+     mcsfp = fopen(tmp, "r");
+     if(mcsfp != NULL)
+     {
+@@ -951,7 +955,7 @@
+ 
+ 
+ #ifdef DUMP_DEBUG
+-    dumpfp=fopen("dump.log", "w");
++    dumpfp=fopen(LOG_PATH"/ircd-dump.log", "w");
+ #endif
+ #ifdef USE_SYSLOG
+     syslog(LOG_NOTICE, "Server Ready");
+diff -Nur solidircd-stable.orig/src/klines.c solidircd-stable/src/klines.c
+--- solidircd-stable.orig/src/klines.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/klines.c	2009-09-25 12:38:06.000000000 +0200
+@@ -462,7 +462,7 @@
+     journalcount = 0;
+ 
+     /* open a compaction file to dump all active klines to */
+-    ircsnprintf(buf1, sizeof(buf1), "%s/.klines_c", dpath);
++    ircsnprintf(buf1, sizeof(buf1), RUN_PATH"/.klines_c");
+     newfile = open(buf1, O_WRONLY|O_CREAT|O_TRUNC, 0700);
+     if (newfile < 0)
+     {
+@@ -539,7 +539,7 @@
+     char buf1[1024];
+     FILE *jf;
+ 
+-    ircsnprintf(journalfilename, sizeof(journalfilename), "%s/.klines", dpath);
++    ircsnprintf(journalfilename, sizeof(journalfilename), RUN_PATH"/.klines");
+ 
+     if (journal >= 0)
+     {
+diff -Nur solidircd-stable.orig/src/modules.c solidircd-stable/src/modules.c
+--- solidircd-stable.orig/src/modules.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/modules.c	2009-09-25 12:38:06.000000000 +0200
+@@ -211,7 +211,7 @@
+     if(modules && modules->module_path)
+         ircsnprintf(mnamebuf, 512, "%s/%s.so", modules->module_path, modname);
+     else
+-        ircsnprintf(mnamebuf, 512, "%s/modules/%s.so", dpath, modname);
++        ircsnprintf(mnamebuf, 512, LIB_PATH"/modules/%s.so", modname);
+ 
+     tmpmod.handle = dlopen(mnamebuf, RTLD_NOW);
+     if(tmpmod.handle == NULL)
+diff -Nur solidircd-stable.orig/src/s_conf.c solidircd-stable/src/s_conf.c
+--- solidircd-stable.orig/src/s_conf.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/s_conf.c	2009-09-25 12:38:06.000000000 +0200
+@@ -1670,10 +1696,19 @@
+     {
+         if (tmp->type && (tmp->type->flag & SSTF_CERTIFICATE)) {
+             tmp->type = NULL;
+-            strncpyzt(SSL_Certificate, tmp->value, sizeof(SSL_Certificate));
++			if(strncmp("/", tmp->value, 1) == 0) {
++				// Absolute path
++				strncpyzt(SSL_Certificate, tmp->value, sizeof(SSL_Certificate));
++			} else {
++				snprintf(SSL_Certificate, sizeof(SSL_Certificate), "%s/%s", CONFIG_PATH, tmp->value);
++			}
+         } else if (tmp->type && (tmp->type->flag & SSTF_KEYFILE)) {
+             tmp->type = NULL;
+-            strncpyzt(SSL_Keyfile, tmp->value, sizeof(SSL_Keyfile));
++			if (strncmp("/", tmp->value, 1) == 0) {
++	            strncpyzt(SSL_Keyfile, tmp->value, sizeof(SSL_Keyfile));
++			} else {
++				snprintf(SSL_Keyfile, sizeof(SSL_Keyfile), "%s/%s", CONFIG_PATH, tmp->value);
++			}
+         } else if (tmp->type && (tmp->type->flag & SSTF_UMODEZ)) {
+             tmp->type = NULL;
+             new_confopts |= FLAGS_LETUMODE_z;
+diff -Nur solidircd-stable.orig/src/s_serv.c solidircd-stable/src/s_serv.c
+--- solidircd-stable.orig/src/s_serv.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/s_serv.c	2009-09-25 12:38:06.000000000 +0200
+@@ -1000,7 +1000,7 @@
+         char tmp[PATH_MAX];
+         
+         last_stat_save = timeofday;
+-        ircsprintf(tmp, "%s/.maxclients", dpath);
++        ircsprintf(tmp, RUN_PATH"/.maxclients");
+         fp = fopen(tmp, "w");
+         if (fp != NULL)
+         {
+

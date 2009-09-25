@@ -1,0 +1,177 @@
+diff -Nur solidircd-stable.orig/include/config.h solidircd-stable/include/config.h
+--- solidircd-stable.orig/include/config.h	2009-09-25 13:04:05.000000000 +0200
++++ solidircd-stable/include/config.h	2009-09-25 12:38:06.000000000 +0200
+@@ -133,9 +133,12 @@
+ /* 
+  * If you want host name to be auto-spoofed upon connection
+  * define this here, and a password for spoofing check.
++ *
++ * If the password is set to "", here or in ircd.conf,
++ * HOSTNAME_SPOOFING is disabled (Xel)
+  */
+ #undef HOSTNAME_SPOOFING
+-#define HOSTNAME_SPOOFING_PWD "evilpassword"
++#define HOSTNAME_SPOOFING_PWD ""
+ 
+ /*
+  * STRICT_LIST
+@@ -978,8 +981,9 @@
+ #define THROTTLE_HASHSIZE 25147
+ 
+ /* THROTTLE_IGNORE - To ignore a specific host in the throttling code */
+-#undef THROTTLE_IGNORE
++#define THROTTLE_IGNORE
+ 
++/* Set to "0.0.0.0" or "" here or in ircd.conf to disable */
+ #ifdef THROTTLE_IGNORE
+ #define THROTTLE_IGNORE_IP "0.0.0.0"
+ #endif
+diff -Nur solidircd-stable.orig/include/confparse.h solidircd-stable/include/confparse.h
+--- solidircd-stable.orig/include/confparse.h	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/include/confparse.h	2009-09-25 12:38:06.000000000 +0200
+@@ -176,6 +176,10 @@
+ #define OPTF_HIDDENSERVNAME         0x10000000
+ #define OPTT_HIDDENSERVDESC    "HIDDENSERVDESC"
+ #define OPTF_HIDDENSERVDESC         0x20000000
++#define OPTT_HOSTNAMESPOOFINGPWD  "HOSTNAME_SPOOFING_PWD"
++#define OPTF_HOSTNAMESPOOFINGPWD    0x40000000
++#define OPTT_THROTTLEIGNOREIP     "THROTTLE_IGNORE_IP"
++#define OPTF_THROTTLEIGNOREIP       0x80000000
+ #define OPTT_BOTCLASS         "BOT_CLASS"
+ #define OPTF_BOTCLASS              0x200000
+ #define OPTT_HELPCHAN             "HELPCHAN"
+diff -Nur solidircd-stable.orig/include/h.h solidircd-stable/include/h.h
+--- solidircd-stable.orig/include/h.h	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/include/h.h	2009-09-25 12:38:06.000000000 +0200
+@@ -67,6 +67,8 @@
+ extern char Local_Kline_Address[HOSTLEN+1];
+ extern char HiddenServName[HOSTLEN+9];
+ extern char HiddenServDesc[TOPICLEN+1];
++extern char Throttle_Ignore_Ip[HOSTLEN+1];
++extern char Hostname_Spoofing_Pwd[HOSTLEN+1];
+ extern char HELPCHAN[HOSTLEN+1];
+ extern char WEBSITE[HOSTLEN+1];
+ extern char AUP[HOSTLEN+1];
+@@ -75,6 +77,7 @@
+ extern int  confopts, new_confopts;
+ extern int  local_ip_limit, local_ip24_limit, global_ip_limit,
+             global_ip24_limit;
++extern int  Throttle_Ignore, Hostname_Spoofing;
+ 
+ /* hostmasking */
+ extern char HostPrefix[HOSTLEN+1];
+diff -Nur solidircd-stable.orig/src/ircd.c solidircd-stable/src/ircd.c
+--- solidircd-stable.orig/src/ircd.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/ircd.c	2009-09-25 12:38:06.000000000 +0200
+@@ -66,13 +66,15 @@
+ char Staff_Address[HOSTLEN+1];
+ char HiddenServName[HOSTLEN+9];
+ char HiddenServDesc[TOPICLEN+1];
++char Throttle_Ignore_Ip[HOSTLEN+1];
++char Hostname_Spoofing_Pwd[HOSTLEN+1];
+ char HELPCHAN[HOSTLEN+1];
+ char WEBSITE[HOSTLEN+1];
+ char AUP[HOSTLEN+1];
+ int  maxchannelsperuser, tsmaxdelta, tswarndelta;
+ int  confopts, new_confopts;
+ int  local_ip_limit, local_ip24_limit, global_ip_limit, global_ip24_limit;
+-
++int  Throttle_Ignore, Hostname_Spoofing;
+ 
+ /* hostmasking */
+ char HostPrefix[HOSTLEN+1]; /* FIXME: A little too big? */
+diff -Nur solidircd-stable.orig/src/s_conf.c solidircd-stable/src/s_conf.c
+--- solidircd-stable.orig/src/s_conf.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/s_conf.c	2009-09-25 12:38:06.000000000 +0200
+@@ -138,9 +138,20 @@
+ 	strncpyzt(HELPCHAN, DEFAULT_HELPCHAN, sizeof(HELPCHAN));
+ 	strncpyzt(WEBSITE, DEFAULT_WEBSITE, sizeof(WEBSITE));
+ 	strncpyzt(AUP, DEFAULT_AUP, sizeof(AUP));
++#ifdef HOSTNAME_SPOOFING
++#ifdef HOSTNAME_SPOOFING_PWD
++	strncpyzt(Hostname_Spoofing_Pwd, HOSTNAME_SPOOFING_PWD, sizeof(HOSTNAME_SPOOFING_PWD));
++	Hostname_Spoofing = (sizeof(HOSTNAME_SPOOFING_PWD) > 1);
++#endif
++#endif
++#ifdef THROTTLE_IGNORE
++#ifdef THROTTLE_IGNORE_IP
++	strncpyzt(Throttle_Ignore_Ip, THROTTLE_IGNORE_IP, sizeof(THROTTLE_IGNORE_IP));
++	Throttle_Ignore = (sizeof(THROTTLE_IGNORE_IP) > 1 && strcmp(THROTTLE_IGNORE_IP, "0.0.0.0"));
++#endif
++#endif
+ }
+ 
+-
+ /* free_ routines
+  * free the requested conf structure
+  * feb.04 -epi
+@@ -1076,8 +1087,23 @@
+             tmp->type = NULL;
+             strncpyzt(AUP, tmp->value, sizeof(AUP));
+         }
+-
+-       
++#ifdef HOSTNAME_SPOOFING
++		  else if (tmp->type && (tmp->type->flag & OPTF_HOSTNAMESPOOFINGPWD))
++        {
++            tmp->type = NULL;
++            strncpyzt(Hostname_Spoofing_Pwd, tmp->value, sizeof(HOSTNAME_SPOOFING_PWD));
++            Hostname_Spoofing = (sizeof(Hostname_Spoofing_Pwd) > 1);
++        }
++#endif
++#ifdef THROTTLE_IGNORE
++		  else if (tmp->type && (tmp->type->flag & OPTF_THROTTLEIGNOREIP))
++        {
++            tmp->type = NULL;
++            strncpyzt(Throttle_Ignore_Ip, tmp->value, sizeof(THROTTLE_IGNORE_IP));
++            Throttle_Ignore = (sizeof(Throttle_Ignore_Ip) > 1 && strcmp(Throttle_Ignore_Ip, "0.0.0.0"));
++        }
++#endif
++ 
+ 
+     }
+     return lnum;
+diff -Nur solidircd-stable.orig/src/s_user.c solidircd-stable/src/s_user.c
+--- solidircd-stable.orig/src/s_user.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/s_user.c	2009-09-25 12:38:06.000000000 +0200
+@@ -627,9 +627,9 @@
+         if (*(user->host + 1) == '\0')
+             spamchar = *user->host;
+ #endif
+-                
++
+ #ifdef HOSTNAME_SPOOFING
+-	if (user->host[0] == 0)
++	if (Hostname_Spoofing && user->host[0] == 0)
+             strncpyzt(user->host, sptr->sockhost, HOSTLEN);
+ 	else
+ 	    strncpyzt(sptr->sockhost, user->host, HOSTLEN);
+@@ -2484,6 +2484,7 @@
+         strncpyzt(user->realhost, host, sizeof(user->host));
+         user->server = me.name;
+ #ifdef HOSTNAME_SPOOFING
++        if(Hostname_Spoofing)
+         {
+             char *spoofed_host;
+             user->host[0] = 0;
+@@ -2491,7 +2492,7 @@
+             if(spoofed_host != NULL)
+             {
+                 spoofed_host[0] = 0;
+-                if (strcmp(server, HOSTNAME_SPOOFING_PWD) == 0)
++                if (strcmp(server, Hostname_Spoofing_Pwd) == 0)
+                 {
+                     char *spoofed_ip = strchr(spoofed_host+1, '|');
+                     if (spoofed_ip != NULL) /* Allow ip spoofing */
+diff -Nur solidircd-stable.orig/src/throttle.c solidircd-stable/src/throttle.c
+--- solidircd-stable.orig/src/throttle.c	2009-09-25 12:34:42.000000000 +0200
++++ solidircd-stable/src/throttle.c	2009-09-25 12:38:06.000000000 +0200
+@@ -356,7 +356,7 @@
+         return 1; /* always successful */
+ 
+ #ifdef THROTTLE_IGNORE
+-    if (!strcmp(host, THROTTLE_IGNORE_IP))
++    if (Throttle_Ignore && !strcmp(host, Throttle_Ignore_Ip))
+         return 1;
+ #endif
+ 
