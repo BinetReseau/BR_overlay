@@ -89,14 +89,14 @@ diff -Nur solidircd-stable.orig/src/s_conf.c solidircd-stable/src/s_conf.c
  	strncpyzt(AUP, DEFAULT_AUP, sizeof(AUP));
 +#ifdef HOSTNAME_SPOOFING
 +#ifdef HOSTNAME_SPOOFING_PWD
-+	strncpyzt(Hostname_Spoofing_Pwd, HOSTNAME_SPOOFING_PWD, sizeof(HOSTNAME_SPOOFING_PWD));
-+	Hostname_Spoofing = (sizeof(HOSTNAME_SPOOFING_PWD) > 1);
++	strncpyzt(Hostname_Spoofing_Pwd, HOSTNAME_SPOOFING_PWD, sizeof(Hostname_Spoofing_Pwd));
++	Hostname_Spoofing = (strlen(HOSTNAME_SPOOFING_PWD) > 0);
 +#endif
 +#endif
 +#ifdef THROTTLE_IGNORE
 +#ifdef THROTTLE_IGNORE_IP
-+	strncpyzt(Throttle_Ignore_Ip, THROTTLE_IGNORE_IP, sizeof(THROTTLE_IGNORE_IP));
-+	Throttle_Ignore = (sizeof(THROTTLE_IGNORE_IP) > 1 && strcmp(THROTTLE_IGNORE_IP, "0.0.0.0"));
++	strncpyzt(Throttle_Ignore_Ip, THROTTLE_IGNORE_IP, sizeof(Throttle_Ignore_Ip));
++	Throttle_Ignore = (strlen(THROTTLE_IGNORE_IP) > 0 && strcmp(THROTTLE_IGNORE_IP, "0.0.0.0"));
 +#endif
 +#endif
  }
@@ -115,16 +115,16 @@ diff -Nur solidircd-stable.orig/src/s_conf.c solidircd-stable/src/s_conf.c
 +		  else if (tmp->type && (tmp->type->flag & OPTF_HOSTNAMESPOOFINGPWD))
 +        {
 +            tmp->type = NULL;
-+            strncpyzt(Hostname_Spoofing_Pwd, tmp->value, sizeof(HOSTNAME_SPOOFING_PWD));
-+            Hostname_Spoofing = (sizeof(Hostname_Spoofing_Pwd) > 1);
++            strncpyzt(Hostname_Spoofing_Pwd, tmp->value, sizeof(Hostname_Spoofing_Pwd));
++            Hostname_Spoofing = (strlen(Hostname_Spoofing_Pwd) > 0);
 +        }
 +#endif
 +#ifdef THROTTLE_IGNORE
 +		  else if (tmp->type && (tmp->type->flag & OPTF_THROTTLEIGNOREIP))
 +        {
 +            tmp->type = NULL;
-+            strncpyzt(Throttle_Ignore_Ip, tmp->value, sizeof(THROTTLE_IGNORE_IP));
-+            Throttle_Ignore = (sizeof(Throttle_Ignore_Ip) > 1 && strcmp(Throttle_Ignore_Ip, "0.0.0.0"));
++            strncpyzt(Throttle_Ignore_Ip, tmp->value, sizeof(Throttle_Ignore_Ip));
++            Throttle_Ignore = (strlen(Throttle_Ignore_Ip) > 0 && strcmp(Throttle_Ignore_Ip, "0.0.0.0"));
 +        }
 +#endif
 + 
