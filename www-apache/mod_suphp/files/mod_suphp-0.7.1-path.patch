@@ -1,0 +1,23 @@
+--- src/Application.cpp.orig	2009-09-28 01:29:26.000000000 +0200
++++ src/Application.cpp	2009-09-28 01:30:37.000000000 +0200
+@@ -547,13 +547,13 @@
+     do {
+         directory = directory.getParentDirectory();
+ 
+-        UserInfo directoryOwner = directory.getUser();
+-        if (directoryOwner != owner && !directoryOwner.isSuperUser()) {
+-            std::string error = "Directory " + directory.getPath()
+-                + " is not owned by " + owner.getUsername();
+-            logger.logWarning(error);
+-            throw SoftException(error, __FILE__, __LINE__);
+-        }
++//        UserInfo directoryOwner = directory.getUser();
++//        if (directoryOwner != owner && !directoryOwner.isSuperUser()) {
++//            std::string error = "Directory " + directory.getPath()
++//                + " is not owned by " + owner.getUsername();
++//            logger.logWarning(error);
++//            throw SoftException(error, __FILE__, __LINE__);
++//        }
+ 
+         if (!directory.isSymlink()
+             && !config.getAllowDirectoryGroupWriteable()
