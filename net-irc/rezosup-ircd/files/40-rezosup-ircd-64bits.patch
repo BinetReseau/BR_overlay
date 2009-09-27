@@ -492,7 +492,6 @@ diff -Nur solidircd-stable.orig/src/ircsprintf.c solidircd-stable/src/ircsprintf
  }
  
  int ircsprintf(char *str, const char *format, ...)
-Files solidircd-stable.orig/src/.ircsprintf.c.swp and solidircd-stable/src/.ircsprintf.c.swp differ
 diff -Nur solidircd-stable.orig/src/memcount.c solidircd-stable/src/memcount.c
 --- solidircd-stable.orig/src/memcount.c	2009-09-25 13:56:59.000000000 +0200
 +++ solidircd-stable/src/memcount.c	2009-09-25 13:57:04.000000000 +0200
@@ -861,6 +860,81 @@ diff -Nur solidircd-stable.orig/src/s_bsd.c solidircd-stable/src/s_bsd.c
  #include "memcount.h"
  
  /* If FD_ZERO isn't define up to this point,
+diff -Nur solidircd-stable.orig/src/send.c solidircd-stable/src/send.c
+--- solidircd-stable.orig/src/send.c	2009-09-25 13:56:59.000000000 +0200
++++ solidircd-stable/src/send.c	2009-09-27 23:12:46.000000000 +0200
+@@ -413,7 +413,7 @@
+     int len;            /* used for the length of the current message */
+     
+     va_start(vl, pattern);
+-    len = ircvsprintf(sendbuf, pattern, vl);
++    len = ircvsnprintf(sendbuf, sizeof(sendbuf), pattern, vl);
+    
+     if (to->from)
+         to = to->from;
+@@ -450,7 +450,7 @@
+         len = ircsprintf(sendbuf, ":%s PRIVMSG %s :", from->name, ai->nick);
+ #endif
+ 
+-    len += ircvsprintf(sendbuf+len, pattern, vl);
++    len += ircvsnprintf(sendbuf+len, sizeof(sendbuf) - len, pattern, vl);
+     send_message(to, sendbuf, len, NULL);
+     va_end(vl);
+ }
+@@ -459,7 +459,7 @@
+ {
+     int len;            /* used for the length of the current message */
+    
+-    len = ircvsprintf(sendbuf, pattern, vl);
++    len = ircvsnprintf(sendbuf, sizeof(sendbuf), pattern, vl);
+    
+     if (to->from)
+         to = to->from;
+@@ -528,7 +528,7 @@
+                 buffer[sidx++] = *p;
+     }
+ 
+-    msglen = ircvsprintf(&buffer[sidx], pattern + 3, vl);
++    msglen = ircvsnprintf(&buffer[sidx], sizeof(buffer) - sidx, pattern + 3, vl);
+     msglen += sidx;
+ 
+     return msglen;
+@@ -1423,7 +1423,7 @@
+         {
+             if (IsServer(from)) 
+             {
+-                ircvsprintf(temp, pattern, vl2);
++                ircvsnprintf(temp, sizeof(temp), pattern, vl2);
+                 sendto_ops("Send message (%s) to %s[%s] dropped from "
+                            "%s(Fake Dir)", temp, to->name, to->from->name,
+                            from->name);
+@@ -1540,7 +1540,7 @@
+         {
+             if (IsServer(from)) 
+             {
+-                ircvsprintf(temp, pattern, vl);
++                ircvsnprintf(temp, sizeof(temp), pattern, vl);
+                 sendto_ops("Send message (%s) to %s[%s] dropped from "
+                            "%s(Fake Dir)", temp,
+                            to->name, to->from->name, from->name);
+@@ -1632,7 +1632,7 @@
+     void *share_buf = NULL;
+     
+     va_start(vl, pattern);
+-    len = ircvsprintf(sendbuf, pattern, vl);
++    len = ircvsnprintf(sendbuf, sizeof(sendbuf), pattern, vl);
+     sbuf_begin_share(sendbuf, len, &share_buf);
+         
+     for (fd = listp->entry[j = 1]; j <= listp->last_entry;
+@@ -1646,7 +1646,7 @@
+ {
+     int len, j, fd;
+     void *share_buf = NULL;
+-    len = ircvsprintf(sendbuf, pattern, vl);
++    len = ircvsnprintf(sendbuf, sizeof(sendbuf), pattern, vl);
+     sbuf_begin_share(sendbuf, len, &share_buf);
+         
+     for (fd = listp->entry[j = 1]; j <= listp->last_entry;
 diff -Nur solidircd-stable.orig/src/socketengine_poll.c solidircd-stable/src/socketengine_poll.c
 --- solidircd-stable.orig/src/socketengine_poll.c	2009-09-25 13:56:59.000000000 +0200
 +++ solidircd-stable/src/socketengine_poll.c	2009-09-25 13:57:04.000000000 +0200
