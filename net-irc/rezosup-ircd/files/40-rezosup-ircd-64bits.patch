@@ -284,8 +284,8 @@ diff -Nur solidircd-stable.orig/src/ircd.c solidircd-stable/src/ircd.c
      dump_connections(me.fd);
 diff -Nur solidircd-stable.orig/src/ircsprintf.c solidircd-stable/src/ircsprintf.c
 --- solidircd-stable.orig/src/ircsprintf.c	2009-09-25 13:56:59.000000000 +0200
-+++ solidircd-stable/src/ircsprintf.c	2009-09-25 15:46:28.000000000 +0200
-@@ -12,199 +12,18 @@
++++ solidircd-stable/src/ircsprintf.c	2009-10-04 17:31:07.000000000 +0200
+@@ -12,199 +12,20 @@
  inline int irc_printf(char *str, const char *pattern, va_list vl) 
  #endif
  {
@@ -297,6 +297,8 @@ diff -Nur solidircd-stable.orig/src/ircsprintf.c solidircd-stable/src/ircsprintf
 -    va_list ap;
 -    VA_COPY(ap, vl);
 -
++	va_list ap;
++	VA_COPY(ap, vl);
  #ifdef WANT_SNPRINTF
 -    if(!size) 
 -    {
@@ -388,7 +390,7 @@ diff -Nur solidircd-stable.orig/src/ircsprintf.c solidircd-stable/src/ircsprintf
 -	buf[len]=0;
 -	return len;
 +#endif
-+		return vsprintf(str, pattern, vl);
++		return vsprintf(str, pattern, ap);
  #ifdef WANT_SNPRINTF
 -    }
 -    else
@@ -482,7 +484,7 @@ diff -Nur solidircd-stable.orig/src/ircsprintf.c solidircd-stable/src/ircsprintf
 -		buf[len++]=*format++;
 -		break;
 -	    }
-+		return vsnprintf(str, size, pattern, vl);
++		return vsnprintf(str, size, pattern, ap);
  	}
 -	buf[len]=0;
 -	return len;
@@ -862,7 +864,7 @@ diff -Nur solidircd-stable.orig/src/s_bsd.c solidircd-stable/src/s_bsd.c
  /* If FD_ZERO isn't define up to this point,
 diff -Nur solidircd-stable.orig/src/send.c solidircd-stable/src/send.c
 --- solidircd-stable.orig/src/send.c	2009-09-25 13:56:59.000000000 +0200
-+++ solidircd-stable/src/send.c	2009-09-27 23:12:46.000000000 +0200
++++ solidircd-stable/src/send.c	2009-10-11 23:46:17.000000000 +0200
 @@ -413,7 +413,7 @@
      int len;            /* used for the length of the current message */
      
@@ -890,15 +892,6 @@ diff -Nur solidircd-stable.orig/src/send.c solidircd-stable/src/send.c
     
      if (to->from)
          to = to->from;
-@@ -528,7 +528,7 @@
-                 buffer[sidx++] = *p;
-     }
- 
--    msglen = ircvsprintf(&buffer[sidx], pattern + 3, vl);
-+    msglen = ircvsnprintf(&buffer[sidx], sizeof(buffer) - sidx, pattern + 3, vl);
-     msglen += sidx;
- 
-     return msglen;
 @@ -1423,7 +1423,7 @@
          {
              if (IsServer(from)) 
@@ -1011,7 +1004,7 @@ diff -Nur solidircd-stable.orig/src/s_serv.c solidircd-stable/src/s_serv.c
  #include "userban.h"
 diff -Nur solidircd-stable.orig/src/s_user.c solidircd-stable/src/s_user.c
 --- solidircd-stable.orig/src/s_user.c	2009-09-25 13:56:59.000000000 +0200
-+++ solidircd-stable/src/s_user.c	2009-09-25 14:26:40.000000000 +0200
++++ solidircd-stable/src/s_user.c	2009-10-04 15:32:54.000000000 +0200
 @@ -1253,11 +1253,14 @@
          ubuf[1] = '\0';
      }
@@ -1029,3 +1022,21 @@ diff -Nur solidircd-stable.orig/src/s_user.c solidircd-stable/src/s_user.c
     
      if(MyClient(sptr))
      {
+@@ -1889,8 +1892,15 @@
+                                            parv[2]);
+             }
+             else
+-                sendto_channel_butone(cptr, sptr, chptr, ":%s %s %s :%s",
+-                                      parv[0], cmd, target, parv[2]);
++			{
++				if (parv[2] == NULL) {
++					sendto_channel_butone(cptr, sptr, chptr, ":%s %s %s:",
++							parv[0], cmd, target);
++				} else {
++	                sendto_channel_butone(cptr, sptr, chptr, ":%s %s %s :%s",
++		                                  parv[0], cmd, target, parv[2]);
++				}
++			}
+ 
+             /* next target */
+             continue;

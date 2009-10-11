@@ -1,6 +1,6 @@
 diff -Nur solidircd-stable.orig/include/config.h solidircd-stable/include/config.h
---- solidircd-stable.orig/include/config.h	2009-09-25 13:04:05.000000000 +0200
-+++ solidircd-stable/include/config.h	2009-09-25 12:38:06.000000000 +0200
+--- solidircd-stable.orig/include/config.h	2009-10-12 00:36:15.000000000 +0200
++++ solidircd-stable/include/config.h	2009-09-25 13:37:24.000000000 +0200
 @@ -133,9 +133,12 @@
  /* 
   * If you want host name to be auto-spoofed upon connection
@@ -27,8 +27,8 @@ diff -Nur solidircd-stable.orig/include/config.h solidircd-stable/include/config
  #define THROTTLE_IGNORE_IP "0.0.0.0"
  #endif
 diff -Nur solidircd-stable.orig/include/confparse.h solidircd-stable/include/confparse.h
---- solidircd-stable.orig/include/confparse.h	2009-09-25 12:34:42.000000000 +0200
-+++ solidircd-stable/include/confparse.h	2009-09-25 12:38:06.000000000 +0200
+--- solidircd-stable.orig/include/confparse.h	2009-10-12 00:36:15.000000000 +0200
++++ solidircd-stable/include/confparse.h	2009-10-12 00:37:51.000000000 +0200
 @@ -176,6 +176,10 @@
  #define OPTF_HIDDENSERVNAME         0x10000000
  #define OPTT_HIDDENSERVDESC    "HIDDENSERVDESC"
@@ -40,9 +40,18 @@ diff -Nur solidircd-stable.orig/include/confparse.h solidircd-stable/include/con
  #define OPTT_BOTCLASS         "BOT_CLASS"
  #define OPTF_BOTCLASS              0x200000
  #define OPTT_HELPCHAN             "HELPCHAN"
+@@ -269,6 +273,8 @@
+     {OPTT_WEBSITE, OPTF_WEBSITE, VARTYPE_NAME},
+     {OPTT_AUP, OPTF_AUP, VARTYPE_NAME},
+     {OPTT_RQUIT, OPTF_RQUIT, VARTYPE_NONE},
++	{OPTT_HOSTNAMESPOOFINGPWD, OPTF_HOSTNAMESPOOFINGPWD, VARTYPE_NAME},
++	{OPTT_THROTTLEIGNOREIP, OPTF_THROTTLEIGNOREIP, VARTYPE_NAME},
+     {(char *) 0, 0, 0}
+ };
+ 
 diff -Nur solidircd-stable.orig/include/h.h solidircd-stable/include/h.h
---- solidircd-stable.orig/include/h.h	2009-09-25 12:34:42.000000000 +0200
-+++ solidircd-stable/include/h.h	2009-09-25 12:38:06.000000000 +0200
+--- solidircd-stable.orig/include/h.h	2009-10-12 00:36:15.000000000 +0200
++++ solidircd-stable/include/h.h	2009-09-25 13:37:24.000000000 +0200
 @@ -67,6 +67,8 @@
  extern char Local_Kline_Address[HOSTLEN+1];
  extern char HiddenServName[HOSTLEN+9];
@@ -61,8 +70,8 @@ diff -Nur solidircd-stable.orig/include/h.h solidircd-stable/include/h.h
  /* hostmasking */
  extern char HostPrefix[HOSTLEN+1];
 diff -Nur solidircd-stable.orig/src/ircd.c solidircd-stable/src/ircd.c
---- solidircd-stable.orig/src/ircd.c	2009-09-25 12:34:42.000000000 +0200
-+++ solidircd-stable/src/ircd.c	2009-09-25 12:38:06.000000000 +0200
+--- solidircd-stable.orig/src/ircd.c	2009-10-12 00:36:15.000000000 +0200
++++ solidircd-stable/src/ircd.c	2009-09-25 13:57:04.000000000 +0200
 @@ -66,13 +66,15 @@
  char Staff_Address[HOSTLEN+1];
  char HiddenServName[HOSTLEN+9];
@@ -81,22 +90,22 @@ diff -Nur solidircd-stable.orig/src/ircd.c solidircd-stable/src/ircd.c
  /* hostmasking */
  char HostPrefix[HOSTLEN+1]; /* FIXME: A little too big? */
 diff -Nur solidircd-stable.orig/src/s_conf.c solidircd-stable/src/s_conf.c
---- solidircd-stable.orig/src/s_conf.c	2009-09-25 12:34:42.000000000 +0200
-+++ solidircd-stable/src/s_conf.c	2009-09-25 12:38:06.000000000 +0200
+--- solidircd-stable.orig/src/s_conf.c	2009-10-12 00:36:15.000000000 +0200
++++ solidircd-stable/src/s_conf.c	2009-09-25 13:37:24.000000000 +0200
 @@ -138,9 +138,20 @@
  	strncpyzt(HELPCHAN, DEFAULT_HELPCHAN, sizeof(HELPCHAN));
  	strncpyzt(WEBSITE, DEFAULT_WEBSITE, sizeof(WEBSITE));
  	strncpyzt(AUP, DEFAULT_AUP, sizeof(AUP));
 +#ifdef HOSTNAME_SPOOFING
 +#ifdef HOSTNAME_SPOOFING_PWD
-+	strncpyzt(Hostname_Spoofing_Pwd, HOSTNAME_SPOOFING_PWD, sizeof(Hostname_Spoofing_Pwd));
-+	Hostname_Spoofing = (strlen(HOSTNAME_SPOOFING_PWD) > 0);
++	strncpyzt(Hostname_Spoofing_Pwd, HOSTNAME_SPOOFING_PWD, sizeof(HOSTNAME_SPOOFING_PWD));
++	Hostname_Spoofing = (sizeof(HOSTNAME_SPOOFING_PWD) > 1);
 +#endif
 +#endif
 +#ifdef THROTTLE_IGNORE
 +#ifdef THROTTLE_IGNORE_IP
-+	strncpyzt(Throttle_Ignore_Ip, THROTTLE_IGNORE_IP, sizeof(Throttle_Ignore_Ip));
-+	Throttle_Ignore = (strlen(THROTTLE_IGNORE_IP) > 0 && strcmp(THROTTLE_IGNORE_IP, "0.0.0.0"));
++	strncpyzt(Throttle_Ignore_Ip, THROTTLE_IGNORE_IP, sizeof(THROTTLE_IGNORE_IP));
++	Throttle_Ignore = (sizeof(THROTTLE_IGNORE_IP) > 1 && strcmp(THROTTLE_IGNORE_IP, "0.0.0.0"));
 +#endif
 +#endif
  }
@@ -115,16 +124,16 @@ diff -Nur solidircd-stable.orig/src/s_conf.c solidircd-stable/src/s_conf.c
 +		  else if (tmp->type && (tmp->type->flag & OPTF_HOSTNAMESPOOFINGPWD))
 +        {
 +            tmp->type = NULL;
-+            strncpyzt(Hostname_Spoofing_Pwd, tmp->value, sizeof(Hostname_Spoofing_Pwd));
-+            Hostname_Spoofing = (strlen(Hostname_Spoofing_Pwd) > 0);
++            strncpyzt(Hostname_Spoofing_Pwd, tmp->value, sizeof(HOSTNAME_SPOOFING_PWD));
++            Hostname_Spoofing = (sizeof(Hostname_Spoofing_Pwd) > 1);
 +        }
 +#endif
 +#ifdef THROTTLE_IGNORE
 +		  else if (tmp->type && (tmp->type->flag & OPTF_THROTTLEIGNOREIP))
 +        {
 +            tmp->type = NULL;
-+            strncpyzt(Throttle_Ignore_Ip, tmp->value, sizeof(Throttle_Ignore_Ip));
-+            Throttle_Ignore = (strlen(Throttle_Ignore_Ip) > 0 && strcmp(Throttle_Ignore_Ip, "0.0.0.0"));
++            strncpyzt(Throttle_Ignore_Ip, tmp->value, sizeof(THROTTLE_IGNORE_IP));
++            Throttle_Ignore = (sizeof(Throttle_Ignore_Ip) > 1 && strcmp(Throttle_Ignore_Ip, "0.0.0.0"));
 +        }
 +#endif
 + 
@@ -132,8 +141,8 @@ diff -Nur solidircd-stable.orig/src/s_conf.c solidircd-stable/src/s_conf.c
      }
      return lnum;
 diff -Nur solidircd-stable.orig/src/s_user.c solidircd-stable/src/s_user.c
---- solidircd-stable.orig/src/s_user.c	2009-09-25 12:34:42.000000000 +0200
-+++ solidircd-stable/src/s_user.c	2009-09-25 12:38:06.000000000 +0200
+--- solidircd-stable.orig/src/s_user.c	2009-10-12 00:36:15.000000000 +0200
++++ solidircd-stable/src/s_user.c	2009-10-04 15:32:54.000000000 +0200
 @@ -627,9 +627,9 @@
          if (*(user->host + 1) == '\0')
              spamchar = *user->host;
@@ -146,7 +155,7 @@ diff -Nur solidircd-stable.orig/src/s_user.c solidircd-stable/src/s_user.c
              strncpyzt(user->host, sptr->sockhost, HOSTLEN);
  	else
  	    strncpyzt(sptr->sockhost, user->host, HOSTLEN);
-@@ -2484,6 +2484,7 @@
+@@ -2494,6 +2494,7 @@
          strncpyzt(user->realhost, host, sizeof(user->host));
          user->server = me.name;
  #ifdef HOSTNAME_SPOOFING
@@ -154,7 +163,7 @@ diff -Nur solidircd-stable.orig/src/s_user.c solidircd-stable/src/s_user.c
          {
              char *spoofed_host;
              user->host[0] = 0;
-@@ -2491,7 +2492,7 @@
+@@ -2501,7 +2502,7 @@
              if(spoofed_host != NULL)
              {
                  spoofed_host[0] = 0;
@@ -164,8 +173,8 @@ diff -Nur solidircd-stable.orig/src/s_user.c solidircd-stable/src/s_user.c
                      char *spoofed_ip = strchr(spoofed_host+1, '|');
                      if (spoofed_ip != NULL) /* Allow ip spoofing */
 diff -Nur solidircd-stable.orig/src/throttle.c solidircd-stable/src/throttle.c
---- solidircd-stable.orig/src/throttle.c	2009-09-25 12:34:42.000000000 +0200
-+++ solidircd-stable/src/throttle.c	2009-09-25 12:38:06.000000000 +0200
+--- solidircd-stable.orig/src/throttle.c	2009-10-12 00:36:15.000000000 +0200
++++ solidircd-stable/src/throttle.c	2009-09-25 13:37:24.000000000 +0200
 @@ -356,7 +356,7 @@
          return 1; /* always successful */
  
