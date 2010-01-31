@@ -121,7 +121,7 @@ src_compile() {
 	use urandom && myconf="${myconf} --with-devrandom=/dev/urandom"
 
 	econf \
-	    --enable-plain \       # Pour le BR - PJ
+	    --enable-plain \
 		--enable-login \
 		--enable-ntlm \
 		--enable-auth-sasldb \
