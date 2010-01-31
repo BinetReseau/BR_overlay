@@ -1,0 +1,204 @@
+dir /usr
+dir /usr/share
+dir /usr/share/doc
+dir /usr/share/doc/cyrus-sasl-2.1.23-r1
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-murchison-sasl-login-xx.txt.bz2 4ed83cff41013458ae0ba830f18caf03 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-ietf-sasl-gssapi-xx.txt.bz2 7e1e8263f24454ec4726f00c65d9ef20 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc2945.txt.bz2 bb2bf42452b13eee13a2669d24d4306a 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc3174.txt.bz2 3f0ce6a78bfebe27349fabc2a33917f6 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/TODO.bz2 b50824c403f14abd2b55d62de0699fa4 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/ChangeLog.bz2 ffebc343f1ee9393a26d4f3e93b19178 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-ietf-sasl-saslprep-xx.txt.bz2 e67b3a312b2f13540f45d43df62bbc22 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-ietf-sasl-plain-xx.txt.bz2 c084b9b492e2e0d395e4cf32f0a16cb7 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc2195.txt.bz2 c678addab63b786706602ff2ce504e7d 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc2595.txt.bz2 70617c2579880fefc84a727cd5529beb 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-ietf-sasl-rfc2222bis-xx.txt.bz2 0254d64da4dc85698ce30e2918a390d2 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc2245.txt.bz2 7eb90a2f752f7f8a8cff9af916344762 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc1939.txt.bz2 3766e847cdf2b6ebbe4f24ba2ed0b2a0 1264933805
+dir /usr/share/doc/cyrus-sasl-2.1.23-r1/html
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/macosx.html 057afcd73564d577cf9ee73dca9b6dcd 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/gssapi.html 612485f246411340a1e9f0be8e84aaf0 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/upgrading.html 2e00a1e119313cb33eabd829ea6e97c1 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/install.html 9519de91d7324124e9725fd876951d8e 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/plugprog.html 28f2843c68b6a46002b8834008285a7a 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/options.html 46aeb0dcc69af331c8d8a921a82429e5 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/readme.html 3245632e9aea509c9a0e078d5adcd929 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/appconvert.html 66a64181a6dac1a46567f6c3c63faf45 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/index.html 95bb68475ff7417d2f5accd8b0fa78ef 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/mechanisms.html 33665fb1c3f0af5a3d08737743814e2b 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/sysadmin.html 0204e04fe3301812225416dadca4901f 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/components.html 5f38c5f115031a17911c5a98720c4050 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/programming.html 27d4a716965f9bcfd7ab92694538f8e9 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/windows.html 4029abcc17ce3ced2d7725f9956616ad 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/html/advanced.html 4e59d2466e30d3f893ce78a7a2d0a78c 1264933805
+dir /usr/share/doc/cyrus-sasl-2.1.23-r1/saslauthd
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/saslauthd/LDAP_SASLAUTHD.bz2 4173eba22cf98c0cf5899f67fe009d44 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/saslauthd/ChangeLog.bz2 5d802f4f3de40bc645fbe18765e923d6 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/saslauthd/NEWS.bz2 4cdbfd49c95bfbc6fd699a7273b5f2d3 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/saslauthd/AUTHORS.bz2 23b0e6d3f630d9a6260c6b9076d18637 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/saslauthd/README.bz2 b710cce6be361879c2995c1beee45824 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-ietf-sasl-rfc2831bis-xx.txt.bz2 cb7205d8aff2254342d66355c56b3f6b 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc1321.txt.bz2 39a6ddded9f6151fe69a6138f652eae5 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/README.pwcheck.bz2 7aa2113330838e9886f16a0dde0e80b7 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc2222.txt.bz2 5c1a87db0136486159d67d1dfee722b6 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-newman-sasl-c-api-xx.txt.bz2 f636f52fa6f3addc2ebb72a1923951f2 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/NEWS.bz2 f273222aaa1b29b57fce5e1836839c51 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-newman-sasl-passdss-xx.txt.bz2 58049ea2b0f49fc6bc5680fd791fb4e7 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/AUTHORS.bz2 8f533d2f0ad1edbf3f671c12d129b25c 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc2444.txt.bz2 6c202b840722a3e8e4363b44f4171062 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-ietf-sasl-anon-xx.txt.bz2 da337eff0c112a55f2f93552943ffdfb 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/README.bz2 17e28257fe106b775b2e2a62dc669e61 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc2289.txt.bz2 bb5faa14c79961d2259e45cac5a78cd5 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc2104.txt.bz2 337d2d68a108b957780468798d747d1e 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/testing.txt.bz2 a92987a78dd7f6c3b669b24ebadaaba7 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-burdis-cat-srp-sasl-xx.txt.bz2 65067f9831f8b81d2bd73baaf28ad0b6 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/draft-ietf-sasl-crammd5-xx.txt.bz2 58e236fd04442cc3076e04691ec421db 1264933804
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc2243.txt.bz2 306958b629cfcd09f5977ed8e395b109 1264933805
+obj /usr/share/doc/cyrus-sasl-2.1.23-r1/rfc2831.txt.bz2 03ee61990a30db941bc4db6d6796c0a4 1264933805
+dir /usr/share/cyrus-sasl-2
+dir /usr/share/cyrus-sasl-2/examples
+obj /usr/share/cyrus-sasl-2/examples/aclocal.m4 d392e876aa79e1c1fc01c6953f061c32 1264933804
+obj /usr/share/cyrus-sasl-2/examples/libtool 8f09c0c5c98b3cac36d6c5af566b75cc 1264933804
+obj /usr/share/cyrus-sasl-2/examples/config.status 6712eb719ba4f60fd8c80812e22f3b06 1264933804
+dir /usr/share/cyrus-sasl-2/examples/sample
+obj /usr/share/cyrus-sasl-2/examples/sample/client.c 0c3847f216f5b852ca41291a2a9dca3f 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/Makefile.am 7ba525a1fa81741d14160330484c6f43 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/sample-client.c f96890025ea5904957f81c2fe499541e 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/Makefile.in f76042da9a5cb12e57d462cf2dc53a38 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/Makefile 83ec0f81fc863927e56a03cf7cc8d9f6 1264933804
+dir /usr/share/cyrus-sasl-2/examples/sample/.deps
+obj /usr/share/cyrus-sasl-2/examples/sample/.deps/common.Po a9cdfe9e9b30e3de3c84c414d712b7e9 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/.deps/server.Po 26e8fae7f39196f82ef0f5119510d084 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/.deps/sample-client.Po dad0227408777290e6c56afc03cf6e12 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/.deps/sample-server.Po dad0227408777290e6c56afc03cf6e12 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/.deps/client.Po e5c514140f354b5cbad1f2679700b3a2 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/common.h 8e93ef49c9a23eb847a9060647c40a6e 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/sample-server.c 41f683e7a3d1b581441cb0ed5bc20c5d 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/common.c bf85f351d7c9d094e0513a48db9ab557 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/NTMakefile b24b0197ba9af755f1d9b7ad9c737a18 1264933804
+obj /usr/share/cyrus-sasl-2/examples/sample/server.c ec8d58ea100445982391ae38b0af59b3 1264933804
+sym /usr/share/cyrus-sasl-2/examples/include -> /usr/include/sasl 1264933810
+dir /usr/share/cyrus-sasl-2/examples/lib
+sym /usr/share/cyrus-sasl-2/examples/lib/libsasl2.la -> /usr/lib/libsasl2.la 1264933810
+dir /usr/share/cyrus-sasl-2/examples/lib/.libs
+sym /usr/share/cyrus-sasl-2/examples/lib/.libs/libsasl2.so -> /usr/lib/libsasl2.so 1264933810
+obj /usr/share/cyrus-sasl-2/examples/config.h 7fb3174871718afb9fa71bdeda72e938 1264933804
+obj /usr/share/cyrus-sasl-2/examples/configure.in 7d9fe3d01cf389fc84eb4da8cdf4d82c 1264933804
+dir /usr/share/man
+dir /usr/share/man/man8
+obj /usr/share/man/man8/sasldblistusers2.8.bz2 cb0c3bb910304d3715d18133ca60d01c 1264933803
+obj /usr/share/man/man8/saslauthd.8.bz2 88ade2ae36368db3b6975d96bfbc75ee 1264933804
+obj /usr/share/man/man8/saslpasswd2.8.bz2 8475833d2db349da8a9991199f2080d6 1264933803
+obj /usr/share/man/man8/pluginviewer.8.bz2 94f85e51f4c0547888df10bb107b43d3 1264933803
+dir /usr/share/man/man3
+obj /usr/share/man/man3/sasl_encodev.3.bz2 a7c71248a24c1fed35b19cd70d06cecb 1264933803
+obj /usr/share/man/man3/sasl_server_init.3.bz2 046650efb7e337fe4a98173acf3d1d2b 1264933803
+obj /usr/share/man/man3/sasl_dispose.3.bz2 f17330bfc313be4a40cf26fe63d0bf22 1264933803
+obj /usr/share/man/man3/sasl_setprop.3.bz2 7e066c078994320f670c57fc2e85a9f7 1264933803
+obj /usr/share/man/man3/sasl_verifyfile_t.3.bz2 842caf2a9557bff9eb4b5a160feb2708 1264933803
+obj /usr/share/man/man3/sasl_setpass.3.bz2 e10e1c262fc4cbe0beb39e80eabfc235 1264933804
+obj /usr/share/man/man3/sasl_authorize_t.3.bz2 ae74a9e9fa740cd3ab5fdf95b078dd7a 1264933803
+obj /usr/share/man/man3/sasl_server_step.3.bz2 d6919cfa660c1f2b1343b37abaac784e 1264933803
+obj /usr/share/man/man3/sasl_callbacks.3.bz2 768ddb4ffee851ee5ced93cf9024a7ae 1264933803
+obj /usr/share/man/man3/sasl_server_start.3.bz2 7ed73dbb0b87d927771466f3e0783f31 1264933803
+obj /usr/share/man/man3/sasl_checkapop.3.bz2 c3a9ea9911711ea25dc2dd0ddf0e9cd0 1264933803
+obj /usr/share/man/man3/sasl_client_step.3.bz2 3ede24ada4ffd872ea7ce711d234751d 1264933803
+obj /usr/share/man/man3/sasl.3.bz2 666e9795c7c157b7af5afd32e0cbed04 1264933803
+obj /usr/share/man/man3/sasl_auxprop_request.3.bz2 e131913a36b578b073d8d9677520c37f 1264933804
+obj /usr/share/man/man3/sasl_getopt_t.3.bz2 fcaf5bcee5bafe062456485ca87de4fd 1264933803
+obj /usr/share/man/man3/sasl_getrealm_t.3.bz2 3e08b6f6e89bc683c1f0295d357184ee 1264933803
+obj /usr/share/man/man3/sasl_errdetail.3.bz2 bbd88093c1a469b05c4052d50680e392 1264933804
+obj /usr/share/man/man3/sasl_user_exists.3.bz2 1e9695584be50756d9f63cfc4c331195 1264933804
+obj /usr/share/man/man3/sasl_client_init.3.bz2 158b0c2d3238ce6e6de764b85b67ab03 1264933803
+obj /usr/share/man/man3/sasl_log_t.3.bz2 3b35142303c4b8bd88bb433ade229e74 1264933803
+obj /usr/share/man/man3/sasl_errors.3.bz2 3e9ac0d44a860287296d7bbabcadfe16 1264933803
+obj /usr/share/man/man3/sasl_idle.3.bz2 964b58bd5209070a7cde844b017a2a56 1264933804
+obj /usr/share/man/man3/sasl_checkpass.3.bz2 683cbc1307a1de95957ceccc736dbdbd 1264933803
+obj /usr/share/man/man3/sasl_server_new.3.bz2 c238bb2690969bd3305dcac800cb0e22 1264933803
+obj /usr/share/man/man3/sasl_encode.3.bz2 a7c71248a24c1fed35b19cd70d06cecb 1264933803
+obj /usr/share/man/man3/sasl_canon_user_t.3.bz2 df27cfc1a6789ec7255cd1753d51b909 1264933803
+obj /usr/share/man/man3/sasl_getconfpath_t.3.bz2 f864ad021ecb7ecf3040e0cf2e4fa088 1264933804
+obj /usr/share/man/man3/sasl_getsimple_t.3.bz2 e7d245ad74d3ca842a795128be393ea9 1264933803
+obj /usr/share/man/man3/sasl_server_userdb_checkpass_t.3.bz2 21d82f1db7a71f54d813788ca34aaa59 1264933804
+obj /usr/share/man/man3/sasl_errstring.3.bz2 ba47abe2ed7622b97324f29a51e7bea2 1264933803
+obj /usr/share/man/man3/sasl_server_userdb_setpass_t.3.bz2 dbebde878ded868bd67cd90d46918fd1 1264933804
+obj /usr/share/man/man3/sasl_decode.3.bz2 634a434f9c9c47bfe42ae848104c992c 1264933803
+obj /usr/share/man/man3/sasl_auxprop_getctx.3.bz2 a3d826f235e552cc5707b855e6ed244d 1264933804
+obj /usr/share/man/man3/sasl_listmech.3.bz2 19563488642e6ec92b6bddc2cd9bd0fc 1264933803
+obj /usr/share/man/man3/sasl_client_start.3.bz2 a79269bc5cc9149b607a441cd3c2b38c 1264933803
+obj /usr/share/man/man3/sasl_global_listmech.3.bz2 9933daa27268031070d59cf5035e4f09 1264933804
+obj /usr/share/man/man3/sasl_chalprompt_t.3.bz2 695465fff4788cde395b2e7a872922c8 1264933804
+obj /usr/share/man/man3/sasl_done.3.bz2 96c7ef673968d6105cb7d19904217edf 1264933803
+obj /usr/share/man/man3/sasl_client_new.3.bz2 cb120b8c2bed4eca7c15a25f726047e7 1264933803
+obj /usr/share/man/man3/sasl_getprop.3.bz2 03abffc4505aa60f725f011537968391 1264933803
+obj /usr/share/man/man3/sasl_auxprop.3.bz2 e6cc03b17bf2b1f93b78ceabe47f3598 1264933804
+obj /usr/share/man/man3/sasl_getpath_t.3.bz2 915f46d801003270418ea9edde278d2d 1264933803
+obj /usr/share/man/man3/sasl_getsecret_t.3.bz2 bed658768ce053ab80733c1c555ea98f 1264933803
+dir /usr/include
+dir /usr/include/sasl
+obj /usr/include/sasl/hmac-md5.h 364c10844e8500e69a20b25ed298fac5 1264933802
+obj /usr/include/sasl/saslutil.h ccf00ce403d4e229f97fab3f18a110f2 1264933802
+obj /usr/include/sasl/md5global.h 251b2cabb4e8de810a2b8d1b37c4da5f 1264933802
+obj /usr/include/sasl/saslplug.h c8d53058f0a5400b5d52965960d7be5d 1264933802
+obj /usr/include/sasl/prop.h 3c8b6f9a24a2c472260aa0564a6576f3 1264933802
+obj /usr/include/sasl/sasl.h b967ea3a88b0f8b9b7d94630edf3847e 1264933802
+obj /usr/include/sasl/md5.h 0da3c2be119a95f7a752dbb507c05aca 1264933802
+dir /usr/lib
+obj /usr/lib/libsasl2.so.2.0.23 71a2fe6bb81da4552065776153221006 1264933807
+sym /usr/lib/libsasl2.so.2 -> libsasl2.so.2.0.23 1264933810
+obj /usr/lib/libsasl2.la 7e2c065b30f9f4bd0176984a6f6d5a18 1264933803
+dir /usr/lib/sasl2
+sym /usr/lib/sasl2/libanonymous.so -> libanonymous.so.2.0.23 1264933810
+obj /usr/lib/sasl2/libsasldb.la 661a983b64afd264656110348df253a3 1264933802
+sym /usr/lib/sasl2/libntlm.so.2 -> libntlm.so.2.0.23 1264933810
+obj /usr/lib/sasl2/libcrammd5.la 71f2ee1bc3bcadb0881b2a524d734752 1264933802
+obj /usr/lib/sasl2/libplain.so.2.0.23 81c0b2dcd38377990659423be95aef34 1264933807
+obj /usr/lib/sasl2/libanonymous.so.2.0.23 a389d4c0d0e792c0710727c6952f903f 1264933807
+obj /usr/lib/sasl2/liblogin.la 81cb5f2b12d4f6b5c7bb5497bfcf68f6 1264933802
+sym /usr/lib/sasl2/libdigestmd5.so -> libdigestmd5.so.2.0.23 1264933810
+sym /usr/lib/sasl2/liblogin.so -> liblogin.so.2.0.23 1264933810
+sym /usr/lib/sasl2/libdigestmd5.so.2 -> libdigestmd5.so.2.0.23 1264933810
+sym /usr/lib/sasl2/libsasldb.so.2 -> libsasldb.so.2.0.23 1264933810
+sym /usr/lib/sasl2/libcrammd5.so -> libcrammd5.so.2.0.23 1264933810
+obj /usr/lib/sasl2/libgssapiv2.la 8c39ca20266c28840b162134d3e3cc47 1264933802
+sym /usr/lib/sasl2/libntlm.so -> libntlm.so.2.0.23 1264933810
+sym /usr/lib/sasl2/libanonymous.so.2 -> libanonymous.so.2.0.23 1264933810
+sym /usr/lib/sasl2/libgssapiv2.so.2 -> libgssapiv2.so.2.0.23 1264933810
+obj /usr/lib/sasl2/libdigestmd5.so.2.0.23 364b0382a5dc3a86004b0a841e9f1a52 1264933807
+obj /usr/lib/sasl2/libanonymous.la bdabc4460648dccf884a713672cd1380 1264933802
+obj /usr/lib/sasl2/libcrammd5.so.2.0.23 a63967e08f98697b5d658e13148c371c 1264933807
+sym /usr/lib/sasl2/libplain.so.2 -> libplain.so.2.0.23 1264933810
+sym /usr/lib/sasl2/libsasldb.so -> libsasldb.so.2.0.23 1264933810
+obj /usr/lib/sasl2/libsasldb.so.2.0.23 8b4d604ea5b49559f958eec1bae24431 1264933807
+sym /usr/lib/sasl2/libplain.so -> libplain.so.2.0.23 1264933810
+obj /usr/lib/sasl2/libdigestmd5.la 4b7a451a3d9e26fb3ea7bf29a2562228 1264933802
+obj /usr/lib/sasl2/libplain.la 294b4954afb36efa952a5eb29694b3bf 1264933802
+obj /usr/lib/sasl2/libgssapiv2.so.2.0.23 2668af2a00427a42f71dd3380953ceda 1264933807
+obj /usr/lib/sasl2/libntlm.la 1e8dcdb6c80171beddea93c816db5fbd 1264933802
+sym /usr/lib/sasl2/libgssapiv2.so -> libgssapiv2.so.2.0.23 1264933810
+sym /usr/lib/sasl2/liblogin.so.2 -> liblogin.so.2.0.23 1264933810
+obj /usr/lib/sasl2/libntlm.so.2.0.23 51ec49271cac374c63f6ee3dad295ed2 1264933807
+sym /usr/lib/sasl2/libcrammd5.so.2 -> libcrammd5.so.2.0.23 1264933810
+obj /usr/lib/sasl2/liblogin.so.2.0.23 55f80119f7f39208e1effdd67d6a2579 1264933807
+sym /usr/lib/libsasl2.so -> libsasl2.so.2.0.23 1264933810
+dir /usr/sbin
+obj /usr/sbin/pluginviewer a28a6655a26c421581fa3d4d6d63a65f 1264933807
+obj /usr/sbin/sasldblistusers2 699e99e710f130d500fee34a1e646239 1264933807
+obj /usr/sbin/pwcheck a2e06017e9de2538ddfc7b7b486ed6b4 1264933807
+obj /usr/sbin/saslauthd e1b6fe3a02a3b5e745f5f06eb75719d2 1264933807
+obj /usr/sbin/saslpasswd2 671fb53e333d2a0961c79f2baa1993fc 1264933807
+obj /usr/sbin/testsaslauthd 164993f62dce2e5a5971b7f158b1b4c3 1264933807
+dir /etc
+dir /etc/init.d
+obj /etc/init.d/pwcheck c14374b47f308d6754e87ab6e0fa2939 1264933806
+obj /etc/init.d/saslauthd 9045c1b9c79a6ae0727b31e602d098ad 1264933806
+dir /etc/conf.d
+obj /etc/conf.d/saslauthd d8f08903e22cae1bdb41cf723cb73241 1264933806
+dir /etc/sasl2
+obj /etc/sasl2/.keep_dev-libs_cyrus-sasl-2 d41d8cd98f00b204e9800998ecf8427e 1264933804
+dir /etc/pam.d
+obj /etc/pam.d/saslauthd a1b5b72d1285487654685fc497aa81b5 1264933805
+dir /var
+dir /var/lib
+dir /var/lib/sasl2
+obj /var/lib/sasl2/.keep_dev-libs_cyrus-sasl-2 d41d8cd98f00b204e9800998ecf8427e 1264933804
