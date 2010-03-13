@@ -15,7 +15,7 @@ LICENSE="GPL-2"
 SLOT="0"
 
 SRC_URI="ftp://miroir.eleves.polytechnique.fr/xshare/qrezix-2.1.3.tar.bz2"
-KEYWORDS="~x86"
+KEYWORDS="x86 amd64"
 IUSE="+chat +mainui tray notifier +xnet doc"
 
 RDEPEND=">=x11-libs/qt-core-4.4.2
