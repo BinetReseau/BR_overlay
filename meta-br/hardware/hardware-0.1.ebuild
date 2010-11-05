@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=1
+EAPI=2
 
 DESCRIPTION="Hardware related tools"
 HOMEPAGE="http://br.frankiz.net/"
@@ -14,7 +14,7 @@ KEYWORDS="x86 amd64"
 IUSE=""
 
 DEPEND="meta-br/core
-	meta-br/svn-verify
+        meta-br/svn-verify
         sys-apps/sdparm
         sys-apps/hdparm
         sys-apps/smartmontools

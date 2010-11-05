@@ -14,7 +14,7 @@ KEYWORDS="x86 amd64"
 IUSE=""
 
 DEPEND="meta-br/core
-	meta-br/svn_verify
+        meta-br/svn_verify
         app-admin/sudo
         app-admin/syslog-ng
         app-backup/hdup
