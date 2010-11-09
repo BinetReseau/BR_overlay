@@ -17,7 +17,7 @@ DEPEND="meta-br/core"
 RDEPEND="${DEPEND}"
 
 src_install () {
-        if ! [ -e /root/.svn/ ]; then
+        if ! [ -e /root/bin/.svn/ ]; then
                 die "Les binaires SVN-root (/root/bin) ne sont pas installés, merci de les installer avant de continuer l'installation";
         fi;
         if ! [ -e /etc/.svn/ ]; then
