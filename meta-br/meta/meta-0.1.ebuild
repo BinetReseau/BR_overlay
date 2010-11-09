@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=2
 
 DESCRIPTION="Meta package pulling in all br-used packages."
 HOMEPAGE=""
@@ -15,7 +15,7 @@ IUSE="-tv -web"
 
 DEPEND="meta-br/core
         meta-br/common
-	meta-br/svn_verify
+        meta-br/svn_verify
         tv? ( meta-br/tv )
         web? ( meta-br/web )
         "

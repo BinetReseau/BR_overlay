@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=2
 
 DESCRIPTION="Core tools for BR servers"
 HOMEPAGE="http://br.frankiz.net/"
@@ -15,8 +15,8 @@ IUSE=""
 
 DEPEND="app-admin/logrotate
         app-admin/syslog-ng
-	app-portage/layman[git,-subversion]
-        dev-vcs/subversion[-webdav-neon]
+        app-portage/layman[git,-subversion]
+        dev-vcs/subversion
         sys-process/vixie-cron"
 RDEPEND="${DEPEND}"
 

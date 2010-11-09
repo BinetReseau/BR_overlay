@@ -14,7 +14,7 @@ KEYWORDS="x86 amd64"
 IUSE=""
 
 DEPEND="meta-br/core
-	meta-br/svn_verify
+        meta-br/svn_verify
         app-admin/sudo
         app-admin/syslog-ng
         app-backup/hdup
@@ -29,7 +29,7 @@ DEPEND="meta-br/core
         app-shells/zsh
         app-shells/zsh-completion
         net-analyzer/net-snmp
-	net-analyzer/netcat
+        net-analyzer/netcat
         net-firewall/iptables
         sys-process/htop
         sys-process/iotop
