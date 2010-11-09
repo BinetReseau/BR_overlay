@@ -15,7 +15,7 @@ IUSE="-tv -web"
 
 DEPEND="meta-br/core
         meta-br/common
-	meta-br/svn-verify
+	meta-br/svn_verify
         tv? ( meta-br/tv )
         web? ( meta-br/web )
         "

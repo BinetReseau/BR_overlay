@@ -29,6 +29,7 @@ DEPEND="meta-br/core
         app-shells/zsh
         app-shells/zsh-completion
         net-analyzer/net-snmp
+	net-analyzer/netcat
         net-firewall/iptables
         sys-process/htop
         sys-process/iotop
