@@ -14,7 +14,7 @@ KEYWORDS="x86 amd64"
 IUSE=""
 
 DEPEND="meta-br/core
-        meta-br/svn-verify
+        meta-br/svn_verify
         sys-apps/sdparm
         sys-apps/hdparm
         sys-apps/smartmontools

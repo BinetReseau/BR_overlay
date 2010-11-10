@@ -28,6 +28,7 @@ DEPEND="meta-br/core
         app-shells/bash-completion
         app-shells/zsh
         app-shells/zsh-completion
+        mail-mta/postfix[-ldap]
         net-analyzer/net-snmp
         net-analyzer/netcat
         net-firewall/iptables
