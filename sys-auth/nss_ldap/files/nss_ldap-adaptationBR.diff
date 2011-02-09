@@ -1,0 +1,47 @@
+--- nss_ldap-264/ldap-grp.c	2008-10-30 21:50:15.000000000 +0100
++++ ../work/nss_ldap-264/ldap-grp.c	2011-02-09 02:35:04.628132815 +0100
+@@ -1006,6 +1006,7 @@
+   int erange = 0;
+ #endif /* HAVE_NSS_H */
+   char *userdn = NULL;
++  char *uid = NULL;
+   LDAPMessage *res, *e;
+   static const char *no_attrs[] = { NULL };
+   const char *filter;
+@@ -1107,6 +1108,15 @@
+       if (userdn != NULL)
+ 	{
+ 	  LA_STRING2 (a) = userdn;
++	  char* uid = strdup (userdn);
++	  syslog (LOG_ERR, "pan %s", uid);
++	  char* comma = strstr(uid, ",");
++	  if ( comma ) 
++	    {
++	      *comma = 0;
++	    }
++	  
++	  LA_STRING (a) = uid+4;
+ 	  LA_TYPE (a) = LA_TYPE_STRING_AND_STRING;
+ 	  filter = _nss_ldap_filt_getgroupsbymemberanddn;
+ 	}
+@@ -1148,6 +1158,7 @@
+ #else
+       free (userdn);
+ #endif /* HAVE_LDAP_MEMFREE */
++      free(uid);
+     }
+ 
+   _nss_ldap_namelist_destroy (&lia.known_groups);
+--- nss_ldap-264/ldap-schema.c	2008-10-30 21:50:15.000000000 +0100
++++ ../work/nss_ldap-264/ldap-schema.c	2011-02-09 02:34:58.635675090 +0100
+@@ -214,8 +214,8 @@
+ 
+   /* users */
+   snprintf (_nss_ldap_filt_getpwnam, LDAP_FILT_MAXSIZ,
+-	    "(&(%s=%s)(%s=%s))", AT (objectClass), OC (posixAccount),
+-            ATM (LM_PASSWD, uid), "%s");
++	    "(&(%s=%s)(brAlias=%s))", AT (objectClass), OC (posixAccount),
++             "%s");
+   snprintf (_nss_ldap_filt_getpwuid, LDAP_FILT_MAXSIZ,
+ 	    "(&(%s=%s)(%s=%s))",
+ 	    AT (objectClass), OC (posixAccount), AT (uidNumber), "%d");
