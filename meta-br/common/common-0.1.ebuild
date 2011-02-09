@@ -34,6 +34,7 @@ DEPEND="meta-br/core
         net-firewall/iptables
         sys-process/htop
         sys-process/iotop
+        dev-util/strace
         sys-process/lsof"
 RDEPEND="${DEPEND}"
 
