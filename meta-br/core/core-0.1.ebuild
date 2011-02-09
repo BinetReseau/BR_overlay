@@ -14,7 +14,7 @@ KEYWORDS="x86 amd64"
 IUSE=""
 
 DEPEND="app-admin/logrotate
-        app-admin/syslog-ng[hardened]
+        app-admin/syslog-ng
         app-portage/layman[git,-subversion]
         dev-vcs/subversion[-webdav-neon,-dso]
         sys-process/vixie-cron"
