@@ -15,7 +15,7 @@ IUSE=""
 
 DEPEND="meta-br/core
         meta-br/svn_verify
-        www-server/apache
+        www-servers/apache
         dev-lang/php
         "
 RDEPEND="${DEPEND}"
