@@ -1,113 +1,168 @@
-diff -Naur nagios-plugins-1.4.15.orig/plugins/check_http.c nagios-plugins-1.4.15/plugins/check_http.c
---- nagios-plugins-1.4.15.orig/plugins/check_http.c	2010-11-03 11:59:10.689874765 -0400
-+++ nagios-plugins-1.4.15/plugins/check_http.c	2010-11-03 12:20:44.889812288 -0400
-@@ -124,6 +124,7 @@
+--- nagios-plugins-1.4.15.orig/plugins/check_http.c	2011-03-05 15:02:24.000000000 +0100
++++ nagios-plugins-1.4.15/plugins/check_http.c	2011-03-05 22:28:09.000000000 +0100
+@@ -123,6 +123,8 @@
+ char *http_method;
  char *http_post_data;
  char *http_content_type;
++char *proxy_host;
++int proxy_port=8080;
  char buffer[MAX_INPUT_BUFFER];
-+int http_connect = FALSE;
  
  int process_arguments (int, char **);
- int check_http (void);
-@@ -191,6 +192,7 @@
-     {"nohtml", no_argument, 0, 'n'},
-     {"ssl", no_argument, 0, 'S'},
-     {"sni", no_argument, 0, SNI_OPTION},
-+    {"http-connect", no_argument, 0, 'K'},
-     {"post", required_argument, 0, 'P'},
-     {"method", required_argument, 0, 'j'},
-     {"IP-address", required_argument, 0, 'I'},
-@@ -235,7 +237,7 @@
+@@ -211,6 +213,8 @@
+     {"no-body", no_argument, 0, 'N'},
+     {"max-age", required_argument, 0, 'M'},
+     {"content-type", required_argument, 0, 'T'},
++    {"proxy", required_argument, 0, 'x'},
++    {"proxy-port", required_argument, 0, 'y'},
+     {"pagesize", required_argument, 0, 'm'},
+     {"invert-regex", no_argument, NULL, INVERT_REGEX},
+     {"use-ipv4", no_argument, 0, '4'},
+@@ -235,7 +239,7 @@
    }
  
    while (1) {
 -    c = getopt_long (argc, argv, "Vvh46t:c:w:A:k:H:P:j:T:I:a:b:e:p:s:R:r:u:f:C:nlLSm:M:N", longopts, &option);
-+    c = getopt_long (argc, argv, "Vvh46Kt:c:w:A:k:H:P:j:T:I:a:b:e:p:s:R:r:u:f:C:nlLSm:M:N", longopts, &option);
++    c = getopt_long (argc, argv, "Vvh46t:c:w:A:k:H:P:j:T:I:a:b:e:p:s:R:r:u:f:C:nlLSm:M:N:x:y:", longopts, &option);
      if (c == -1 || c == EOF)
        break;
  
-@@ -414,6 +416,9 @@
-       usage4 (_("IPv6 support not available"));
- #endif
+@@ -311,6 +315,14 @@
+     case SNI_OPTION:
+       use_sni = TRUE;
        break;
-+    case 'K': /* use http-connect */
-+      http_connect = TRUE;
++    case 'x': /* Use proxy */
++      proxy_host=optarg;
 +      break;
-     case 'v': /* verbose */
-       verbose = TRUE;
-       break;
-@@ -807,6 +812,11 @@
-     die (STATE_CRITICAL, _("HTTP CRITICAL - Unable to open TCP socket\n"));
++    case 'y': /* Proxy port */
++      proxy_port=atoi(optarg);
++      if (proxy_port==0)
++        usage2(_("check_http: invalid proxy port number\n"), optarg);
++      break;
+     case 'f': /* onredirect */
+       if (!strcmp (optarg, "stickyport"))
+         onredirect = STATE_DEPENDENT, followsticky = STICKY_HOST|STICKY_PORT;
+@@ -802,22 +814,38 @@
+   int page_len = 0;
+   int result = STATE_OK;
+ 
+-  /* try to connect to the host at the given port number */
+-  if (my_tcp_connect (server_address, server_port, &sd) != STATE_OK)
+-    die (STATE_CRITICAL, _("HTTP CRITICAL - Unable to open TCP socket\n"));
  #ifdef HAVE_SSL
++  /* try to connect to the host at the given port number */
    if (use_ssl == TRUE) {
-+    if (http_connect == TRUE) {
-+      /* only using port 443 */
-+      if (http_connect_through_proxy(host_name, 443, user_agent, sd) != STATE_OK)
-+        die (STATE_CRITICAL, _("HTTP CRITICAL - Unable to open proxy tunnel TCP socket\n"));
-+    }
-     np_net_ssl_init_with_hostname(sd, (use_sni ? host_name : NULL));
-     if (check_cert == TRUE) {
-       result = np_net_ssl_check_cert(days_till_exp);
-@@ -1263,6 +1273,44 @@
+-    np_net_ssl_init_with_hostname(sd, (use_sni ? host_name : NULL));
+-    if (check_cert == TRUE) {
+-      result = np_net_ssl_check_cert(days_till_exp);
+-      np_net_ssl_cleanup();
+-      if (sd) close(sd);
+-      return result;
++    if ((proxy_host && proxy_connect()) || my_tcp_connect (server_address, server_port, &sd) == STATE_OK) {
++      np_net_ssl_init_with_hostname(sd, (use_sni ? host_name : NULL));
++      if (check_cert == TRUE) {
++        result = np_net_ssl_check_cert(days_till_exp);
++        np_net_ssl_cleanup();
++        if (sd) close(sd);
++        return result;
++      }
++    } else {
++      die (STATE_CRITICAL, _("HTTP CRITICAL - Unable to open TCP socket\n"));
+     }
++  } else {
++    if (proxy_host && my_tcp_connect (proxy_host, proxy_port, &sd) != STATE_OK)
++      die (STATE_CRITICAL, _("Unable to open TCP socket to proxy\n"));
++    else if (my_tcp_connect (server_address, server_port, &sd) != STATE_OK)
++      die (STATE_CRITICAL, _("HTTP CRITICAL - Unable to open TCP socket\n"));
+   }
+-#endif /* HAVE_SSL */
++#else
++  /* try to connect to the host at the given port number */
++  if (proxy_host && my_tcp_connect (proxy_host, proxy_port, &sd) != STATE_OK)
++    die (STATE_CRITICAL, _("Unable to open TCP socket to proxy\n"));
++  else if (my_tcp_connect (server_address, server_port, &sd) != STATE_OK)
++    die (STATE_CRITICAL, _("HTTP CRITICAL - Unable to open TCP socket\n"));
++#endif
+ 
+-  asprintf (&buf, "%s %s %s\r\n%s\r\n", http_method, server_url, host_name ? "HTTP/1.1" : "HTTP/1.0", user_agent);
++  if (proxy_host)
++    asprintf (&buf, "%s %s HTTP/1.0\r\n%s\r\n", http_method, server_url, user_agent);
++  else
++    asprintf (&buf, "%s %s %s\r\n%s\r\n", http_method, server_url, host_name ? "HTTP/1.1" : "HTTP/1.0", user_agent);
+ 
+   /* tell HTTP/1.1 servers not to keep the connection alive */
+   asprintf (&buf, "%sConnection: close\r\n", buf);
+@@ -1109,6 +1137,52 @@
+   return STATE_UNKNOWN;
  }
  
- 
-+/* start the HTTP CONNECT method exchange with a proxy host */
-+int
-+http_connect_through_proxy (char *host_name, int port, char *user_agent, int sd)
++int proxy_connect()
 +{
-+  int result;
-+  char *send_buffer=NULL;
-+  char recv_buffer[MAX_INPUT_BUFFER];
-+  char *status_line;
-+  char *status_code;
-+  int http_status;
++  char *buf1;
++  char *buf2;
++  int n,i;
 +
-+  asprintf( &send_buffer, "CONNECT %s:%d HTTP/1.0\r\nUser-agent: %s\r\n\r\n", host_name, port, user_agent);
++  if (my_tcp_connect(proxy_host, proxy_port, &sd)!=STATE_OK)
++    return FALSE;
 +
-+  result = STATE_OK;
-+  result = send_tcp_request (sd, send_buffer, recv_buffer, sizeof(recv_buffer));
-+  if (result != STATE_OK)
-+    return result;
++  asprintf (&buf1, "CONNECT %s:%d HTTP/1.0\r\n%s\r\n\r\n", server_address, server_port, user_agent);
 +
-+  status_line = recv_buffer;
-+  status_line[strcspn(status_line, "\r\n")] = 0;
-+  strip (status_line);
 +  if (verbose)
-+    printf ("HTTP_CONNECT STATUS: %s\n", status_line);
++    printf("PROXY CONNECT: %s",buf1);
 +
-+  status_code = strchr (status_line, ' ') + sizeof (char);
-+  if (strspn (status_code, "1234567890") != 3)
-+    die (STATE_CRITICAL, _("HTTP CRITICAL: HTTP_CONNECT Returns Invalid Status Line (%s)\n"), status_line);
++  send(sd,buf1,strlen(buf1),0);
 +
-+  http_status = atoi (status_code);
++  use_ssl=FALSE; /* hack */
 +
-+  if (http_status != 200) {
-+    die (STATE_CRITICAL, _("HTTP CRITICAL: Invalid HTTP Connect Proxy Status (%s)\n"), status_line);
-+  }
++  /* fetch the page */
++  buf1 = strdup("");
++  while ((i = my_recv (buffer, MAX_INPUT_BUFFER-1)) > 0) {
++    if (verbose)
++      printf("PROXY CONNECT: %s",buffer);
++    buffer[i] = '\0';
++    asprintf (&buf2, "%s%s", buf1, buffer);
++    free (buf1);
++    buf1 = buf2;
 +
-+  return STATE_OK;
++    n=strlen(buf1);
++
++    if (strcmp(buf1+n-4,"\r\n\r\n")==0)
++      break;
++    }
++
++  if (verbose)
++    printf("PROXY CONNECT: %s",buf1);
++
++  if (!(strncmp(buf1,"HTTP/1.",7)==0 & strncmp(buf1+8," 200 ",5)==0))
++    return FALSE;
++
++  use_ssl=TRUE;
++  return 1;
 +}
 +
 +
- int
- server_type_check (const char *type)
- {
-@@ -1342,6 +1390,10 @@
-   printf (" %s\n", "-C, --certificate=INTEGER");
-   printf ("   %s\n", _("Minimum number of days a certificate has to be valid. Port defaults to 443"));
-   printf ("   %s\n", _("(when this option is used the URL is not checked.)\n"));
-+  printf (" %s\n", "-K, --http-connect");
-+  printf ("   %s\n", _("Connect to a proxy using the HTTP CONNECT protocol (SSL tunnel)."));
-+  printf ("   %s\n", _("Requires -S option.  Will only connect to host through tunnel"));
-+  printf ("   %s\n", _("on port 443."));
- #endif
++
  
-   printf (" %s\n", "-e, --expect=STRING");
-@@ -1442,5 +1494,5 @@
+ 
+ /* per RFC 2396 */
+@@ -1331,6 +1405,13 @@
+   printf (" %s\n", "-p, --port=INTEGER");
+   printf ("    %s", _("Port number (default: "));
+   printf ("%d)\n", HTTP_PORT);
++  printf (" %s\n", "-x, --proxy-host=ADDRESS");
++  printf ("    %s\n", _("Host name or IP address of HTTP proxy to be used"));
++  printf (" %s\n", "-p, --port=INTEGER");
++  printf ("    %s\n", _("Port number of the HTTP proxy service"));
++
++
++
+ 
+   printf (UT_IPv46);
+ 
+@@ -1442,5 +1523,5 @@
    printf ("       [-e <expect>] [-s string] [-l] [-r <regex> | -R <case-insensitive regex>]\n");
    printf ("       [-P string] [-m <min_pg_size>:<max_pg_size>] [-4|-6] [-N] [-M <age>]\n");
    printf ("       [-A string] [-k string] [-S] [--sni] [-C <age>] [-T <content-type>]\n");
 -  printf ("       [-j method]\n");
-+  printf ("       [-j method] [-K|--http-connect]\n");
++  printf ("       [-j method] [-x proxy-host] [-y proxy-port]\n");
  }
