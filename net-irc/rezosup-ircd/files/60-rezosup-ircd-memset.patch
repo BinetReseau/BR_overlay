@@ -1,0 +1,20 @@
+diff -Nur solidircd-stable.orig/src/s_user.c solidircd-stable/src/s_user.c
+--- solidircd-stable.orig/src/s_user.c	2011-04-21 13:03:02.000000000 +0200
++++ solidircd-stable/src/s_user.c	2011-04-21 13:04:15.000000000 +0200
+@@ -385,13 +385,13 @@
+ 	char *s, *ip, *dot;
+ 	int i,isdns=0;
+ 	uLong sum;
+-	memset(mask, 0, 128);
++	memset(mask, 0, HOSTLEN + 1);
+ 	s  = sptr->sockhost;
+ 	ip = sptr->hostip;
+ 	sum = Maskchecksum(ip, strlen(ip));
+ 
+-	if (strlen (s) > 127)
+-		s[128] = 0;
++	if (strlen (s) > HOSTLEN)
++		s[HOSTLEN] = 0;
+ 
+ 	for (i=0; i<strlen(s) ; i++)
+ 	{

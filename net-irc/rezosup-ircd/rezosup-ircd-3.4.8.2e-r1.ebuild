@@ -30,6 +30,7 @@ src_unpack() {
 	epatch ${FILESDIR}/30-rezosup-ircd-3.4.8.2e-maxconnections.patch || die "Patch failed"
 	epatch ${FILESDIR}/40-rezosup-ircd-64bits.patch || die "Patch failed"
 	epatch ${FILESDIR}/50-rezosup-ircd-3.4.8.2e-ircd.conf.patch || die "Patch failed"
+	epatch ${FILESDIR}/60-rezosup-ircd-memset.patch || die "Patch failed"
 }
 
 src_compile() {
