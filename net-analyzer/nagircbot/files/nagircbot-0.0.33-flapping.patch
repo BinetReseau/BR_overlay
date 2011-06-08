@@ -1,49 +1,71 @@
 --- anna.cpp	2011-01-18 11:39:10.000000000 +0100
-+++ anna.cpp	2011-06-07 13:59:55.784228582 +0200
-@@ -381,30 +381,32 @@
++++ anna.cpp	2011-06-07 22:45:33.297576449 +0200
+@@ -231,7 +231,7 @@
+ 	}
+ }
+ 
+-int emit_status(server_t server_conn, char *channel, struct stats *what)
++int emit_status(server_t server_conn, char *channel, struct stats *what, int was_flapping)
+ {
+ 	int loop;
+ 	char buffer[4096];
+@@ -246,10 +246,11 @@
+ 
+ 	if (n_filters || one_line)
+ 	{
+-		snprintf(buffer, sizeof(buffer), "%s%s%04d/%02d/%02d %02d:%02d %s %s %s %s%s",
++		snprintf(buffer, sizeof(buffer), "%s%s%04d/%02d/%02d %02d:%02d %s %s %s %s %s%s",
+ 				prefix,
+ 				nick_prefix,
+ 				ptm -> tm_year + 1900, ptm -> tm_mon + 1, ptm -> tm_mday, ptm -> tm_hour, ptm -> tm_min,
++				what -> is_flapping ? (was_flapping ? "IS FLAPPING" : "FLAPPING START") : (was_flapping ? "FLAPPING STOP" : ""),
+ 				state_str[what -> current_state],
+ 				what -> host_name?what -> host_name:"",
+ 				what -> service_description?what -> service_description:"",
+@@ -379,8 +380,7 @@
+ 				show = 1;
+ 			}
  		}
- 		else
- 		{
--			if (hard_only)
--			{
--				if (prev[prev_index].state_type == ST_HARD && cur[loop].state_type == ST_HARD)
-+			if (!(prev[prev_index].is_flapping && cur[loop].is_flapping)) {
-+				if (hard_only)
- 				{
--					if (prev[prev_index].current_state != cur[loop].current_state)
-+					if (prev[prev_index].state_type == ST_HARD && cur[loop].state_type == ST_HARD)
- 					{
--						show = 1;
-+						if (prev[prev_index].current_state != cur[loop].current_state)
-+						{
-+							show = 1;
-+						}
-+					}
-+					else if (prev[prev_index].state_type == ST_SOFT && cur[loop].state_type == ST_HARD)
-+					{
-+						if (cur[loop].current_state != 0)
-+						{
-+							show = 1;
-+						}
- 					}
- 				}
--				else if (prev[prev_index].state_type == ST_SOFT && cur[loop].state_type == ST_HARD)
-+				else
- 				{
--					if (cur[loop].current_state != 0)
-+					if (prev[prev_index].current_state != cur[loop].current_state)
- 					{
- 						show = 1;
+-		else
+-		{
++		else if (!(prev[prev_index].is_flapping && cur[loop].is_flapping)) {
+ 			if (hard_only)
+ 			{
+ 				if (prev[prev_index].state_type == ST_HARD && cur[loop].state_type == ST_HARD)
+@@ -398,12 +398,13 @@
  					}
  				}
  			}
 -			else
--			{
++			else if (prev[prev_index].current_state != cur[loop].current_state)
+ 			{
 -				if (prev[prev_index].current_state != cur[loop].current_state)
 -				{
 -					show = 1;
 -				}
--			}
++				show = 1;
++			}
++			else if (prev[prev_index].is_flapping)
++			{
++				show = 1;
+ 			}
  		}
  
- 		/* also 'unknown' is emitted when 'critical_only' is selected */
+@@ -431,7 +432,7 @@
+ 				dolog("emitting results");
+ 			}
+ #endif
+-			if (emit_status(server_conn, channel, &cur[loop]) == -1)
++			if (emit_status(server_conn, channel, &cur[loop],prev[prev_index].is_flapping) == -1)
+ 				return -1;
+ 		}
+ 	}
+@@ -456,7 +457,7 @@
+ 		{
+ 			something_sent = 1;
+ 
+-			if (emit_status(server_conn, to_who, &prev[loop]) == -1)
++			if (emit_status(server_conn, to_who, &prev[loop], prev[loop].is_flapping) == -1)
+ 				return -1;
+ 		}
+ 	}
