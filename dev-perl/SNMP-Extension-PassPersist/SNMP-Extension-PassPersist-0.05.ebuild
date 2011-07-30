@@ -13,5 +13,6 @@ LICENSE="Artistic"
 KEYWORDS="amd64 x86"
 IUSE=""
 
-DEPEND="dev-lang/perl"
+DEPEND="dev-lang/perl
+        dev-perl/Class-Accessor"
 
