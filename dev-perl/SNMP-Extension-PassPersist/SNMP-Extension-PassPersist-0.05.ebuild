@@ -14,5 +14,8 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 DEPEND="dev-lang/perl
-        dev-perl/Class-Accessor"
+        dev-perl/Class-Accessor
+        dev-perl/List-MoreUtils
+        dev-perl/IO-String
+        virtual/perl-Module-Build"
 
