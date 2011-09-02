@@ -1,0 +1,16 @@
+--- lib/logreader.c	2010-11-26 19:26:06.000000000 +0100
++++ lib/logreader.c	2011-09-03 01:36:22.000000000 +0200
+@@ -280,7 +280,12 @@
+   m = log_msg_new((gchar *) line, length,
+                   saddr,
+                   &self->options->parse_options);
+-  
++
++  if (self->options->flags & LR_LOCAL)
++    {
++      m->flags |= LF_LOCAL;
++    }
++
+   if (!m->saddr && self->peer_addr)
+     {
+       m->saddr = g_sockaddr_ref(self->peer_addr);
