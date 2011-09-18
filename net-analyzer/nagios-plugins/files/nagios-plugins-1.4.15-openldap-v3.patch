@@ -1,0 +1,10 @@
+--- nagios-plugins-1.4.15/plugins/check_ldap.c.old	2011-09-18 14:31:41.000000000 +0200
++++ nagios-plugins-1.4.15/plugins/check_ldap.c	2011-09-18 14:32:06.000000000 +0200
+@@ -36,6 +36,7 @@
+ #include "utils.h"
+ 
+ #include <lber.h>
++#define HAVE_LDAP_SET_OPTION 1
+ #define LDAP_DEPRECATED 1
+ #include <ldap.h>
+ 
