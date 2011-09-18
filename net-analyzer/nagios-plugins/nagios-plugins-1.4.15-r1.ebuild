@@ -57,6 +57,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/${PN}-1.4.12-pgsqlconfigure.patch
 	epatch "${FILESDIR}"/${P}-vserver.patch
 	epatch "${FILESDIR}"/${P}-openldap.patch
+	epatch "${FILESDIR}"/${P}-openldap-v3.patch
 	epatch "${FILESDIR}"/${PN}-1.4.15-check-http.patch
 	eautoreconf
 }
