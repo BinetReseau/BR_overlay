@@ -14,7 +14,8 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
-DEPEND="net-analyzer/net-snmp"
+DEPEND="net-analyzer/net-snmp
+         >=dev-perl/Net-SNMP-4.0.0"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/nagios_plugins
@@ -22,6 +23,13 @@ S=${WORKDIR}/nagios_plugins
 pkg_setup() {
 	enewgroup nagios
 	enewuser nagios -1 /bin/bash /var/nagios/home nagios
+}
+
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+
+	epatch "${FILESDIR}"/${PN}-1.1.1-snmpversion.patch
 }
 
 src_install() {

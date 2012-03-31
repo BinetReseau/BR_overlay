@@ -1,0 +1,549 @@
+--- check_snmp_boostedge.pl	2012-03-31 20:26:36.023771698 +0200
++++ check_snmp_boostedge.pl	2011-03-31 20:27:32.784984291 +0200
+@@ -249,9 +249,7 @@
+ 
+ # Get global status
+ my @oidlist=($be_global_status);
+-my $resultat = (Net::SNMP->VERSION < 4) ?
+-          $session->get_request(@oidlist)
+-        : $session->get_request(-varbindlist => \@oidlist);
++my $resultat = $session->get_request(-varbindlist => \@oidlist);
+ 
+ if (!defined($resultat)) {
+    printf("ERROR: Gloabal status table : %s.\n", $session->error);
+@@ -266,9 +264,7 @@
+ 
+ $resultat=undef;
+ # Get service  table
+-$resultat = (Net::SNMP->VERSION < 4) ? 
+-		  $session->get_table($be_service_table)
+-		: $session->get_table(Baseoid => $be_service_table); 
++$resultat = $session->get_table(Baseoid => $be_service_table);
+ 		
+ if (!defined($resultat)) {
+    printf("ERROR: Description table : %s.\n", $session->error);
+
+--- check_snmp_css_main.pl	2012-03-31 20:26:36.019771613 +0200
++++ check_snmp_css_main.pl	2012-03-31 20:27:46.901285927 +0200
+@@ -219,9 +219,7 @@
+ ########### Cisco CSS checks ##############
+ 
+ # Get load table
+-my $resultat = (Net::SNMP->VERSION < 4) ? 
+-		  $session->get_table($css_svc_name)
+-		: $session->get_table(Baseoid => $css_svc_name); 
++my $resultat = $session->get_table(Baseoid => $css_svc_name);
+ 		
+ if (!defined($resultat)) {
+    printf("ERROR: Name table : %s.\n", $session->error);
+
+--- check_snmp_css.pl	2012-03-31 20:26:36.019771613 +0200
++++ check_snmp_css.pl	2012-03-31 20:34:35.326024627 +0200
+@@ -356,9 +356,7 @@
+ 	}
+ 	close (FILE);
+ } else {
+-	$resultat = (Net::SNMP->VERSION < 4) ? 
+-			  $session->get_table($css_svc_name)
+-			: $session->get_table(Baseoid => $css_svc_name); 
++	$resultat = $session->get_table(Baseoid => $css_svc_name);
+ 			
+ 	if (!defined($resultat)) {
+ 	   printf("ERROR: Description table : %s.\n", $session->error);
+@@ -392,9 +390,7 @@
+ }
+ 
+ $resultat = undef;
+-$resultat = (Net::SNMP->VERSION < 4) ?
+-          $session->get_request(@oid_list)
+-        : $session->get_request(-varbindlist => \@oid_list);
++$resultat = $session->get_request(-varbindlist => \@oid_list);
+ 
+ if (!defined($resultat)) {
+    printf("ERROR: Status get : %s.\n", $session->error);
+@@ -402,9 +398,7 @@
+    exit $ERRORS{"UNKNOWN"};
+ }
+ my $resultat2 = undef;
+-$resultat2 = (Net::SNMP->VERSION < 4) ?
+-          $session->get_request(@oid_list2)
+-        : $session->get_request(-varbindlist => \@oid_list2);
++$resultat2 = $session->get_request(-varbindlist => \@oid_list2);
+ 
+ if (!defined($resultat2)) {
+    printf("ERROR: Conn get : %s.\n", $session->error);
+
+--- check_snmp_env.pl	2012-03-31 20:26:36.019771613 +0200
++++ check_snmp_env.pl	2012-03-31 20:29:26.231409179 +0200
+@@ -374,9 +374,7 @@
+ verb("Checking cisco env");
+ 
+ # Get load table
+-my $resultat = (Net::SNMP->VERSION < 4) ? 
+-		  $session->get_table($ciscoEnvMonMIB)
+-		: $session->get_table(Baseoid => $ciscoEnvMonMIB); 
++my $resultat = $session->get_table(Baseoid => $ciscoEnvMonMIB);
+ 		
+ if (!defined($resultat)) {
+    printf("ERROR: Description table : %s.\n", $session->error);
+@@ -574,9 +572,7 @@
+ my $global_status=0;
+ my $output="";
+ # get temp
+-$resultat = (Net::SNMP->VERSION < 4) ? 
+-		  $session->get_table($nokia_temp_tbl)
+-		: $session->get_table(Baseoid => $nokia_temp_tbl); 
++$resultat = $session->get_table(Baseoid => $nokia_temp_tbl);
+ if (defined($resultat)) {
+   verb ("temp found");
+   $temp_exist=1;
+@@ -589,9 +586,7 @@
+ }
+ 		
+ # Get fan table
+-$resultat = (Net::SNMP->VERSION < 4) ? 
+-		  $session->get_table($nokia_fan_table)
+-		: $session->get_table(Baseoid => $nokia_fan_table); 
++$resultat = $session->get_table(Baseoid => $nokia_fan_table);
+ 		
+ if (defined($resultat)) {
+   $fan_exist=1;
+@@ -611,9 +606,7 @@
+ }
+ 
+ # Get ps table
+-$resultat = (Net::SNMP->VERSION < 4) ? 
+-		  $session->get_table($nokia_ps_table)
+-		: $session->get_table(Baseoid => $nokia_ps_table); 
++$resultat = $session->get_table(Baseoid => $nokia_ps_table);
+ 		
+ if (defined($resultat)) {
+   $ps_exist=1;
+@@ -677,9 +670,8 @@
+ 
+ 
+ 	# get sensor table
+-	$resultat = (Net::SNMP->VERSION < 4) ? 
+-			  $session->get_table($bc_sensor_table)
+-			: $session->get_table(Baseoid => $bc_sensor_table); 
++	$resultat = $session->get_table(Baseoid => $bc_sensor_table);
++
+ 	if (defined($resultat)) {
+ 		verb ("sensor table found");
+ 		my ($sens_name,$sens_status,$sens_value,$sens_unit)=(undef,undef,undef,undef);
+@@ -720,9 +712,7 @@
+ 	}
+ 			
+ 	# Get disk table
+-	$resultat = (Net::SNMP->VERSION < 4) ? 
+-			  $session->get_table($bc_dsk_table)
+-			: $session->get_table(Baseoid => $bc_dsk_table); 
++	$resultat = $session->get_table(Baseoid => $bc_dsk_table);
+ 			
+ 	if (defined($resultat)) {
+ 		foreach my $key ( keys %$resultat) {
+@@ -791,9 +781,7 @@
+ # get temp if $o_temp is defined
+ if (defined($o_temp)) {
+   verb("Checking temp < $o_temp");
+-  $resultat = (Net::SNMP->VERSION < 4) ? 
+-		  $session->get_table($iron_tmp_table)
+-		: $session->get_table(Baseoid => $iron_tmp_table); 
++  $resultat = $session->get_table(Baseoid => $iron_tmp_table);
+   if (defined($resultat)) {
+     verb ("temp found");
+     $temp_exist=1;
+@@ -823,9 +812,7 @@
+ # Get fan status if $o_fan is defined
+ if (defined($o_fan)) {
+   verb("Checking fan > $o_fan");
+-  $resultat = (Net::SNMP->VERSION < 4) ?
+-                  $session->get_table($iron_fan_table)
+-                : $session->get_table(Baseoid => $iron_fan_table);
++  $resultat = $session->get_table(Baseoid => $iron_fan_table);
+   if (defined($resultat)) {
+     verb ("fan found");
+     $fan_exist=1;
+@@ -854,9 +842,7 @@
+ 
+ # Get power supply status
+   verb("Checking PS");
+-  $resultat = (Net::SNMP->VERSION < 4) ?
+-                  $session->get_table($iron_ps_table)
+-                : $session->get_table(Baseoid => $iron_ps_table);
++  $resultat = $session->get_table(Baseoid => $iron_ps_table);
+   if (defined($resultat)) {
+     verb ("ps found");
+     $ps_exist=1;
+@@ -946,9 +933,7 @@
+ 
+ # Get PS table (TODO : Bug in FAN table, see with Foundry).
+ 
+-my $result_ps = (Net::SNMP->VERSION < 4) ? 
+-                    $session->get_table($foundry_ps_table)
+-                  : $session->get_table(Baseoid => $foundry_ps_table);
++my $result_ps = $session->get_table(Baseoid => $foundry_ps_table);
+ 
+ my $ps_num=0;
+ if (defined($result_ps)) {
+
+--- check_snmp_linkproof_nhr.pl	2012-03-31 20:26:36.011771441 +0200
++++ check_snmp_linkproof_nhr.pl	2012-03-31 20:30:01.992173916 +0200
+@@ -232,9 +232,7 @@
+ my $global_status=0;
+ 
+ # Get load table
+-my $resultat = (Net::SNMP->VERSION < 4) ? 
+-		  $session->get_table($lp_type)
+-		: $session->get_table(Baseoid => $lp_type); 
++my $resultat = $session->get_table(Baseoid => $lp_type);
+ 		
+ if (!defined($resultat)) {
+    printf("ERROR: NHR table : %s.\n", $session->error);
+@@ -261,16 +259,12 @@
+ }
+ 
+ my $result=undef;
+-if (Net::SNMP->VERSION < 4) {
+-  $result = $session->get_request(@oids);
++if ($session->version == 0) { 
++  # snmpv1
++  $result = $session->get_request(-varbindlist => \@oids);
+ } else {
+-  if ($session->version == 0) { 
+-    # snmpv1
+-    $result = $session->get_request(-varbindlist => \@oids);
+-  } else {
+-    # snmp v2c or v3 : get_bulk_request is not really good for this, so do simple get
+-    $result = $session->get_request(-varbindlist => \@oids);
+-  }
++  # snmp v2c or v3 : get_bulk_request is not really good for this, so do simple get
++  $result = $session->get_request(-varbindlist => \@oids);
+ }
+ 
+ if (!defined($result)) {
+
+--- check_snmp_load.pl	2012-03-31 20:26:36.011771441 +0200
++++ check_snmp_load.pl	2012-03-31 20:30:48.461167901 +0200
+@@ -350,9 +350,7 @@
+ 
+ verb("Checking linux load");
+ # Get load table
+-my $resultat = (Net::SNMP->VERSION < 4) ? 
+-		  $session->get_table($linload_table)
+-		: $session->get_table(Baseoid => $linload_table); 
++my $resultat = $session->get_table(Baseoid => $linload_table);
+ 		
+ if (!defined($resultat)) {
+    printf("ERROR: Description table : %s.\n", $session->error);
+@@ -414,9 +412,7 @@
+ 
+ if ($o_check_type eq "cisco") {
+ my @oidlists = ($cisco_cpu_5m, $cisco_cpu_1m, $cisco_cpu_5s);
+-my $resultat = (Net::SNMP->VERSION < 4) ?
+-	  $session->get_request(@oidlists)
+-	: $session->get_request(-varbindlist => \@oidlists);
++my $resultat = $session->get_request(-varbindlist => \@oidlists);
+ 
+ if (!defined($resultat)) {
+    printf("ERROR: Description table : %s.\n", $session->error);
+@@ -469,9 +465,7 @@
+ 
+ if ($o_check_type eq "cata") {
+ my @oidlists = ($ciscocata_cpu_5m, $ciscocata_cpu_1m, $ciscocata_cpu_5s);
+-my $resultat = (Net::SNMP->VERSION < 4) ?
+-	  $session->get_request(@oidlists)
+-	: $session->get_request(-varbindlist => \@oidlists);
++my $resultat = $session->get_request(-varbindlist => \@oidlists);
+ 
+ if (!defined($resultat)) {
+    printf("ERROR: Description table : %s.\n", $session->error);
+@@ -524,9 +518,7 @@
+ 
+ if ($o_check_type eq "nsc") {
+ my @oidlists = ($nsc_cpu_5m, $nsc_cpu_1m, $nsc_cpu_5s);
+-my $resultat = (Net::SNMP->VERSION < 4) ?
+-	  $session->get_request(@oidlists)
+-	: $session->get_request(-varbindlist => \@oidlists);
++my $resultat = $session->get_request(-varbindlist => \@oidlists);
+ 
+ if (!defined($resultat)) {
+    printf("ERROR: Description table : %s.\n", $session->error);
+@@ -581,9 +573,7 @@
+ # Get load table
+ my @oidlist = $cpu_oid{$o_check_type}; 
+ verb("Checking OID : @oidlist");
+-my $resultat = (Net::SNMP->VERSION < 4) ? 
+-	  $session->get_request(@oidlist)
+-	: $session->get_request(-varbindlist => \@oidlist);
++my $resultat = $session->get_request(-varbindlist => \@oidlist);
+ if (!defined($resultat)) {
+    printf("ERROR: Description table : %s.\n", $session->error);
+    $session->close;
+@@ -629,9 +620,7 @@
+ verb("Checking hpux load");
+ 
+ my @oidlists = ($hpux_load_1_min, $hpux_load_5_min, $hpux_load_15_min);
+-my $resultat = (Net::SNMP->VERSION < 4) ?
+-	  $session->get_request(@oidlists)
+-	: $session->get_request(-varbindlist => \@oidlists);
++my $resultat = $session->get_request(-varbindlist => \@oidlists);
+ 
+ if (!defined($resultat)) {
+    printf("ERROR: Load table : %s.\n", $session->error);
+@@ -682,9 +671,7 @@
+ 
+ ########## Standard cpu usage check ############
+ # Get desctiption table
+-my $resultat =  (Net::SNMP->VERSION < 4) ?
+-	  $session->get_table($base_proc)
+-	: $session->get_table(Baseoid => $base_proc);
++my $resultat =  $session->get_table(Baseoid => $base_proc);
+ 
+ if (!defined($resultat)) {
+    printf("ERROR: Description table : %s.\n", $session->error);
+
+--- check_snmp_mem.pl	2012-03-31 20:26:36.019771613 +0200
++++ check_snmp_mem.pl	2012-03-31 20:31:06.497553782 +0200
+@@ -316,9 +316,7 @@
+ if (defined ($o_cisco)) {
+ 
+   # Get Cisco memory table
+-  $resultat = (Net::SNMP->VERSION < 4) ?
+-                 $session->get_table($cisco_mem_pool)
+-                 :$session->get_table(Baseoid => $cisco_mem_pool);
++  $resultat = $session->get_table(Baseoid => $cisco_mem_pool);
+   
+   if (!defined($resultat)) {
+     printf("ERROR: Description table : %s.\n", $session->error);
+@@ -393,9 +391,7 @@
+ if (defined ($o_hp)) {
+ 
+   # Get hp memory table
+-  $resultat = (Net::SNMP->VERSION < 4) ?
+-                 $session->get_table($hp_mem_pool)
+-                 :$session->get_table(Baseoid => $hp_mem_pool);
++  $resultat = $session->get_table(Baseoid => $hp_mem_pool);
+   
+   if (!defined($resultat)) {
+     printf("ERROR: Description table : %s.\n", $session->error);
+@@ -462,9 +458,7 @@
+ if (defined ($o_netsnmp)) {
+ 
+   # Get NetSNMP memory values
+-  $resultat = (Net::SNMP->VERSION < 4) ?
+-		$session->get_request(@nets_oids)
+-		:$session->get_request(-varbindlist => \@nets_oids);
++  $resultat = $session->get_request(-varbindlist => \@nets_oids);
+   
+   if (!defined($resultat)) {
+     printf("ERROR: netsnmp : %s.\n", $session->error);
+
+--- check_snmp_nsbox.pl	2012-03-31 20:26:36.011771441 +0200
++++ check_snmp_nsbox.pl	2012-03-31 20:31:23.517917964 +0200
+@@ -265,9 +265,7 @@
+ 
+ ########### check global status ##############
+ my @oidlist=($ns_service_status);
+-my $resultat = (Net::SNMP->VERSION < 4) ?
+-          $session->get_request(@oidlist)
+-        : $session->get_request(-varbindlist => \@oidlist);
++my $resultat = $session->get_request(-varbindlist => \@oidlist);
+ 
+ if (!defined($resultat) || ($$resultat{$ns_service_status} eq "noSuchObject")) {
+    printf("ERROR: Global status oid not found : %s.\n", $session->error);
+@@ -282,9 +280,7 @@
+ 
+ ########### check vhost & diode status ##############
+ $resultat=undef;
+-$resultat = (Net::SNMP->VERSION < 4) ? 
+-		  $session->get_table($ns_service_table)
+-		: $session->get_table(Baseoid => $ns_service_table); 
++$resultat = $session->get_table(Baseoid => $ns_service_table);
+ 
+ if (!defined($resultat)) {
+    printf("ERROR: vhost and diode status table : %s.\n", $session->error);
+
+--- check_snmp_process.pl	2012-03-31 20:26:36.019771613 +0200
++++ check_snmp_process.pl	2012-03-31 20:32:18.291090192 +0200
+@@ -396,13 +396,9 @@
+ my %result_cons=();
+ my ($getall_run,$getall_cpu,$getall_mem)=(undef,undef,undef);
+ if ( !defined ($o_path) ) {
+-  $resultat = (Net::SNMP->VERSION < 4) ? 
+-		$session->get_table($run_name_table)
+-		: $session->get_table(Baseoid => $run_name_table);
++  $resultat = $session->get_table(Baseoid => $run_name_table);
+ } else {
+-  $resultat = (Net::SNMP->VERSION < 4) ?
+-	$session->get_table($run_path_table)
+-	:$session->get_table(Baseoid => $run_path_table);
++  $resultat = $session->get_table(Baseoid => $run_path_table);
+ }
+ 
+ if (!defined($resultat)) {
+@@ -412,9 +408,7 @@
+ }
+ 
+ if (defined ($o_get_all)) {
+-  $getall_run = (Net::SNMP->VERSION < 4) ?
+-	$session->get_table($proc_run_state )
+-	:$session->get_table(Baseoid => $proc_run_state );
++  $getall_run = $session->get_table(Baseoid => $proc_run_state );
+   if (!defined($getall_run)) {
+     printf("ERROR: Process run table : %s.\n", $session->error);
+     $session->close;
+@@ -423,9 +418,7 @@
+   foreach my $key ( keys %$getall_run) {
+     $result_cons{$key}=$$getall_run{$key};
+   } 
+-  $getall_cpu = (Net::SNMP->VERSION < 4) ?
+-	$session->get_table($proc_cpu_table)
+-	: $session->get_table(Baseoid => $proc_cpu_table);
++  $getall_cpu = $session->get_table(Baseoid => $proc_cpu_table);
+   if (!defined($getall_cpu)) {
+     printf("ERROR: Process cpu table : %s.\n", $session->error);
+     $session->close;
+@@ -434,9 +428,7 @@
+   foreach my $key ( keys %$getall_cpu) {
+     $result_cons{$key}=$$getall_cpu{$key};
+   } 
+-  $getall_mem = (Net::SNMP->VERSION < 4) ? 
+-	$session->get_table($proc_mem_table)
+-	: $session->get_table(Baseoid => $proc_mem_table);
++  $getall_mem = $session->get_table(Baseoid => $proc_mem_table);
+   if (!defined($getall_mem)) {
+     printf("ERROR: Process memory table : %s.\n", $session->error);
+     $session->close;
+@@ -509,9 +502,7 @@
+ 	 $toid[$i]=$oids[$i+$tmp_index];
+ 	 #verb("$i :  $toid[$i] : $oids[$i+$tmp_index]");
+       }
+-      $tmp_result = (Net::SNMP->VERSION < 4) ? 
+-	    $session->get_request(@toid)
+-		: $session->get_request(Varbindlist => \@toid);
++      $tmp_result = $session->get_request(Varbindlist => \@toid);
+       if (!defined($tmp_result)) { printf("ERROR: running table : %s.\n", $session->error); $session->close;
+ 	  exit $ERRORS{"UNKNOWN"};
+       } 
+@@ -521,9 +512,7 @@
+     }  
+ 
+   } else {
+-    $result = (Net::SNMP->VERSION < 4) ? 
+-		$session->get_request(@oids)
+-		: $session->get_request(Varbindlist => \@oids);
++    $result = $session->get_request(Varbindlist => \@oids);
+     if (!defined($result)) { printf("ERROR: running table : %s.\n", $session->error); $session->close;
+      exit $ERRORS{"UNKNOWN"};
+     }
+
+--- check_snmp_storage.pl	2012-03-31 20:26:36.011771441 +0200
++++ check_snmp_storage.pl	2012-03-31 20:33:13.812278824 +0200
+@@ -398,25 +398,13 @@
+ # Get rid of UTF8 translation in case of accentuated caracters (thanks to Dimo Velev).
+ $session->translate(Net::SNMP->TRANSLATE_NONE);
+ if (defined ($o_index)){
+-  if (Net::SNMP->VERSION < 4) {
+-    $resultat = $session->get_table($index_table);
+-  } else {
+-	$resultat = $session->get_table(Baseoid => $index_table);
+-  }
++  $resultat = $session->get_table(Baseoid => $index_table);
+ } else {
+-  if (Net::SNMP->VERSION < 4) {
+-    $resultat = $session->get_table($descr_table);
+-  } else {
+-    $resultat = $session->get_table(Baseoid => $descr_table);
+-  }
++  $resultat = $session->get_table(Baseoid => $descr_table);
+ }
+ #get storage typetable for reference
+ if (defined($o_storagetype)){
+-  if (Net::SNMP->VERSION < 4) {
+-    $stype = $session->get_table($storagetype_table);
+-  } else {
+-    $stype = $session->get_table(Baseoid => $storagetype_table);
+-  }
++  $stype = $session->get_table(Baseoid => $storagetype_table);
+ }
+ if (!defined($resultat) | (!defined($stype) && defined($o_storagetype))) {
+    printf("ERROR: Description/Type table : %s.\n", $session->error);
+@@ -478,17 +466,13 @@
+ 
+ my $result=undef;
+ 
+-if (Net::SNMP->VERSION < 4) {
+-  $result = $session->get_request(@oids);
++if ($session->version == 0) { 
++  # snmpv1
++  $result = $session->get_request(Varbindlist => \@oids);
+ } else {
+-  if ($session->version == 0) { 
+-    # snmpv1
+-    $result = $session->get_request(Varbindlist => \@oids);
+-  } else {
+-    # snmp v2c or v3 : get_bulk_request is not really good for this, so do simple get
+-    $result = $session->get_request(Varbindlist => \@oids);
+-    foreach my $key ( keys %$result) { verb("$key  : $$result{$key}"); }
+-  }
++  # snmp v2c or v3 : get_bulk_request is not really good for this, so do simple get
++  $result = $session->get_request(Varbindlist => \@oids);
++  foreach my $key ( keys %$result) { verb("$key  : $$result{$key}"); }
+ }
+ 
+ if (!defined($result)) { printf("ERROR: Size table :%s.\n", $session->error); $session->close;
+
+--- check_snmp_vrrp.pl	2012-03-31 20:26:36.011771441 +0200
++++ check_snmp_vrrp.pl	2012-03-31 20:33:26.228544692 +0200
+@@ -306,11 +306,7 @@
+ if ($o_type eq "ipso") {
+ # Get cluster table
+ my $resultat;
+-if (Net::SNMP->VERSION < 4) {
+-  $resultat = $session->get_table( $nokia_clust_table );
+-} else {
+-  $resultat = $session->get_table( Baseoid => $nokia_clust_table );
+-}
++$resultat = $session->get_table( Baseoid => $nokia_clust_table );
+ if (!defined($resultat)) {
+    printf("ERROR: Description table : %s.\n", $session->error);
+    $session->close;
+@@ -364,11 +360,7 @@
+ 
+ # Get vrrp table
+ my $resultat;
+-if (Net::SNMP->VERSION < 4) {
+-  $resultat = $session->get_table( $base_vrrp{$o_type} );
+-} else {
+-  $resultat = $session->get_table( Baseoid => $base_vrrp{$o_type} );
+-}
++$resultat = $session->get_table( Baseoid => $base_vrrp{$o_type} );
+ if (!defined($resultat)) {
+    printf("ERROR: Description table : %s.\n", $session->error);
+    $session->close;
+
+--- check_snmp_win.pl	2012-03-31 20:26:36.011771441 +0200
++++ check_snmp_win.pl	2012-03-31 20:33:40.680854183 +0200
+@@ -256,9 +256,7 @@
+ # Look for process in name or path name table
+ my $resultat=undef;
+ 
+-$resultat = (Net::SNMP->VERSION < 4) ? 
+-		$session->get_table($win_serv_name)
+-		: $session->get_table(Baseoid => $win_serv_name);
++$resultat = $session->get_table(Baseoid => $win_serv_name);
+ 
+ if (!defined($resultat)) {
+    printf("ERROR: Process name table : %s.\n", $session->error);
+@@ -314,9 +312,7 @@
+ my $result=undef;
+ my $num_int_ok=0;
+ 
+-$result = (Net::SNMP->VERSION < 4) ? 
+-    $session->get_request(@oids)
+-  : $session->get_request(Varbindlist => \@oids);
++$result = $session->get_request(Varbindlist => \@oids);
+ 
+ if (!defined($result)) { printf("ERROR: running table : %s.\n", $session->error); $session->close;
+    exit $ERRORS{"UNKNOWN"};
