@@ -17,25 +17,17 @@ IUSE="-ldap -challenge-response"
 
 DEPEND="virtual/pam
 	>=sys-auth/yubico-c-client-2.4
-	>=sys-auth/libyubikey-1.5
-	challenge-response? ( >=sys-auth/ykpers-1 )
+	challenge-response? ( >=sys-auth/ykpers-1
+		>=sys-auth/libyubikey-1.5 )
 	ldap? ( net-nds/openldap )"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/pam_yubico-${PV}"
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-	#mv build-aux/config.rpath .
-	#rm -r build-aux m4/lt* m4/libtool.m4 configure Makefile.in aclocal.m4
-	#mkdir build-aux
-	#mv config.rpath build-aux
-}
-
 src_prepare() {
 	epatch "${FILESDIR}/${PV}-configurefix.patch"
 	epatch "${FILESDIR}/${PV}-AddOtpValidation.patch"
+	epatch "${FILESDIR}/${PV}-LibYukikeyOptional.patch"
 	eautoreconf
 }
 

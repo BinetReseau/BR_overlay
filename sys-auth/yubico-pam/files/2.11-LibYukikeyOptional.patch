@@ -1,0 +1,71 @@
+--- configure.ac	2012-04-20 18:09:08.991293186 +0200
++++ configure.ac	2012-04-20 18:08:13.980112896 +0200
+@@ -70,9 +70,6 @@
+ 
+ AC_LIB_HAVE_LINKFLAGS(yubikey,, [#include <yubikey.h>],
+                       [yubikey_modhex_p("foo")])
+-if test "$ac_cv_libyubikey" != yes; then
+-  AC_MSG_ERROR([Libyubikey v1.5+ not found, see http://code.google.com/p/yubico-c/])
+-fi
+ 
+ AC_ARG_WITH([cr],
+   [AS_HELP_STRING([--without-cr],
+@@ -81,9 +78,13 @@
+   [with_cr=yes])
+ if test "x$with_cr" != xno; then
+   PKG_CHECK_MODULES([YKPERS], [ykpers-1]);
++  # libyubikey required for HAVE_CR
++  if test "$ac_cv_libyubikey" != yes; then
++    AC_MSG_ERROR([Libyubikey v1.5+ not found, see http://code.google.com/p/yubico-c/ (required for challenge-response)])
++  fi
+ fi
+ if test -n "$YKPERS_LIBS"; then
+-  AC_DEFINE([HAVE_CR], [1], [Define if you have libykpers-1])
++  AC_DEFINE([HAVE_CR], [1], [Define if you have libykpers-1 and libyubikey])
+ fi
+ AM_CONDITIONAL([YKPERS], [test -n "$YKPERS_LIBS"])
+ 
+@@ -102,3 +103,14 @@
+ 
+ AC_CONFIG_FILES(Makefile)
+ AC_OUTPUT
++
++AC_MSG_NOTICE([Summary of build options:
++
++  Version:            ${VERSION}
++  Host type:          ${host}
++  Install prefix:     ${prefix}
++  Compiler:           ${CC}
++  Library types:      Shared=${enable_shared}, Static=${enable_static}
++  LDAP:               ${with_ldap}
++  Challenge-Response: ${with_cr}
++])
+--- README	2012-02-10 13:38:24.000000000 +0100
++++ README	2012-04-20 18:08:13.979112839 +0200
+@@ -65,15 +65,13 @@
+ 
+   http://code.google.com/p/yubico-c-client/
+ 
+-It in turn requires Curl, which you need to have installed, and
+-libyubikey. Get libyubikey from
+-
+-  http://code.google.com/p/yubico-c/
++It in turn requires Curl, which you need to have installed.
+ 
+ The new Challenge-Response offline authentication requires libykpers-1
+-from the yubikey-personalization project :
++from the yubikey-personalization project, and libyubikey from yubico-c :
+ 
+   http://code.google.com/p/yubikey-personalization/
++  http://code.google.com/p/yubico-c/
+ 
+ 
+ The build system uses Autoconf, to set up the build system run:
+@@ -83,6 +81,7 @@
+ ------
+ 
+ Use --without-ldap to disable ldap support.
++Use --without-cr to disable challenge-response support.
+ 
+ Then build the code, run the self-test and install the binaries:
+ 
