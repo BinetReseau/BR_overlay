@@ -1,0 +1,13 @@
+--- configure.ac   2012-02-10 13:38:25.000000000 +0100
++++ configure.ac   2012-04-20 16:51:53.884329863 +0200
+@@ -39,7 +39,8 @@
+ AC_CHECK_HEADERS([security/pam_appl.h], [],
+   [AC_MSG_ERROR([[PAM header files not found, install libpam-dev.]])])
+ AC_CHECK_HEADERS([security/pam_modules.h security/_pam_macros.h security/pam_modutil.h], [], [],
+-  [#include <security/pam_appl.h>])
++  [#include <sys/types.h>
++   #include <security/pam_appl.h>])
+
+ AC_CHECK_LIB([pam], [pam_start])
+
+
