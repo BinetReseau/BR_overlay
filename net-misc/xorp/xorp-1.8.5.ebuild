@@ -13,11 +13,12 @@ SRC_URI="http://www.xorp.org/releases/${PV}/${P}-src.tar.bz2"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="ipv6 -debug"
+IUSE="ipv6 -debug logrotate"
 
 DEPEND="dev-libs/openssl
 	sys-libs/ncurses
-	net-analyzer/net-snmp"
+	net-analyzer/net-snmp
+	logrotate? ( app-admin/logrotate )"
 RDEPEND="${DEPEND}
 	net-analyzer/traceroute"
 
@@ -29,33 +30,20 @@ S="${WORKDIR}/xorp"
 
 
 src_configure() {
-	if use ipv6; then
-		myesconsargs=(
-			prefix="/usr/xorp"
-        	        CC="$(tc-getCC)"
-			CFLAGS="${CFLAGS:--O1 -pipe} -Wno-unused-result"
-			CXXFLAGS="${CXXFLAGS:--O1 -pipe} -Wno-unused-result"
-			LINKFLAGS="${LDFLAGS}"
-		)
-        else
-	        myesconsargs=(
-                        disable_ipv6=yes
-			prefix="/usr/xorp"
-        	        CC="$(tc-getCC)"
-			CFLAGS="${CFLAGS:--O1 -pipe} -Wno-unused-result"
-			CXXFLAGS="${CXXFLAGS:--O1 -pipe} -Wno-unused-result"
-			LINKFLAGS="${LDFLAGS}"
-        	)
-        fi
+	myesconsargs=(
+		prefix="/usr/xorp"
+		$(use_scons debug debug yes no)
+		$(use_scons ipv6 disable_ipv6 no yes)
+		CC="$(tc-getCC)"
+		CFLAGS="${CFLAGS:--O1 -pipe} -Wno-unused-result"
+		CXXFLAGS="${CXXFLAGS:--O1 -pipe} -Wno-unused-result"
+		LINKFLAGS="${LDFLAGS}"
+	)
 
 }
 
 src_compile() {
-	if use debug; then
-	        escons
-	else
-		escons debug=no
-	fi
+	escons
 }
 
 src_install() {
@@ -68,7 +56,12 @@ src_install() {
 	doins rtrmgr/config/*.conf
 
 	newconfd "${FILESDIR}/xorp-confd" xorp
-	newinitd "${FILESDIR}/xorp-initd" xorp
+	newinitd "${FILESDIR}/initd-1.8" xorp
+
+	if use logrotate; then
+		insinto /etc/logrotate.d
+		newins package_files/xorp.logrotate xorp
+	fi
 
 	dodoc BUGS ERRATA LICENSE RELEASE_NOTES VERSION
 }
