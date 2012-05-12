@@ -6,7 +6,7 @@ inherit eutils
 
 DESCRIPTION="The eXtensible Open Router Platform"
 HOMEPAGE="http://www.xorp.org/"
-SRC_URI="http://www.xorp.org/releases/${PV}/${P}.tar.gz"
+SRC_URI="http://www.xorp.org/releases/old/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
