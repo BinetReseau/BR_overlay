@@ -4,6 +4,8 @@
 
 inherit eutils
 
+EAPI=2
+
 DESCRIPTION="The eXtensible Open Router Platform"
 HOMEPAGE="http://www.xorp.org/"
 SRC_URI="http://www.xorp.org/releases/old/${P}.tar.gz"
@@ -24,7 +26,12 @@ pkg_setup() {
 	enewgroup xorp
 }
 
-src_compile() {
+src_prepare() {
+        epatch "${FILESDIR}/${PV}-fix_compilation.patch"
+}
+
+
+src_configure() {
 	econf \
 		$(use_enable static) \
 		$(use_enable debug) \
@@ -36,8 +43,6 @@ src_compile() {
 
 	# -Werror prevents building snmp agent...
 	find "${S}" -name Makefile -exec sed -i -e '/^C.*FLAGS/s/-Werror//g' '{}' \;
-
-	emake -j1 || die "emake failed"
 }
 
 src_test() {
