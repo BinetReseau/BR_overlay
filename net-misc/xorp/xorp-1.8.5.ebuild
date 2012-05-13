@@ -13,7 +13,7 @@ SRC_URI="http://www.xorp.org/releases/${PV}/${P}-src.tar.bz2"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="ipv6 -debug logrotate"
+IUSE="ipv6 -debug logrotate -firewall -bgp -click -olsr -ospf -rip -vrrp -xorpsh -fea_dummy"
 
 DEPEND="dev-libs/openssl
 	sys-libs/ncurses
@@ -37,12 +37,20 @@ src_configure() {
 		prefix="/usr/xorp"
 		$(use_scons debug debug yes no)
 		$(use_scons ipv6 disable_ipv6 no yes)
+		$(use_scons firewall disable_fw no yes)
+		$(use_scons bgp enable_bgp yes no)
+		$(use_scons click enable_click yes no)
+		$(use_scons olsr enable_olsr yes no)
+		$(use_scons ospf enable_ospf yes no)
+		$(use_scons rip enable_rip yes no)
+		$(use_scons vrrp enable_vrrp yes no)
+		$(use_scons xorpsh enable_xorpsh yes no)
+		$(use_scons fea_dummy enable_fea_dummy yes no)
 		CC="$(tc-getCC)"
 		CFLAGS="${CFLAGS:--O1 -pipe} -Wno-unused-result"
 		CXXFLAGS="${CXXFLAGS:--O1 -pipe} -Wno-unused-result"
 		LINKFLAGS="${LDFLAGS}"
 	)
-
 }
 
 src_compile() {
