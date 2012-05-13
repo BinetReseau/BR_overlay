@@ -28,6 +28,9 @@ pkg_setup() {
 
 S="${WORKDIR}/xorp"
 
+src_prepare() {
+        epatch "${FILESDIR}/${PV}-fix_compilation.patch"
+}
 
 src_configure() {
 	myesconsargs=(
