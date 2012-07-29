@@ -1,8 +1,8 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-inherit eutils
 EAPI=2
+inherit eutils
 
 DESCRIPTION="The eXtensible Open Router Platform"
 HOMEPAGE="http://www.xorp.org/"
