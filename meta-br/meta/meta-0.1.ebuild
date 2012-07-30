@@ -11,12 +11,12 @@ SRC_URI=""
 LICENSE=""
 SLOT="0"
 KEYWORDS="x86 amd64"
-IUSE="-tv -frankiz"
+IUSE="-tv -frankiznet"
 
 DEPEND="meta-br/core
         meta-br/common
         tv? ( meta-br/tv )
-        frankiz? ( meta-br/frankiz )
+        frankiznet? ( meta-br/frankiznet )
         "
 RDEPEND="${DEPEND}"
 
