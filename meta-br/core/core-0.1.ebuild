@@ -19,9 +19,12 @@ DEPEND="app-admin/logrotate
         layman? ( app-portage/layman[git,-subversion] )
         dev-vcs/subversion[-webdav-neon,-dso]
         dev-vcs/git[-webdav]
+        sys-apps/portage
+        sys-boot/grub
         sys-kernel/hardened-sources
         sys-libs/gdbm[berkdb]
-        sys-process/vixie-cron"
+        sys-process/vixie-cron
+        "
 RDEPEND="${DEPEND}"
 # sys-libs/gdbm[berkdb] required by dev-lang/python[gdbm]
 

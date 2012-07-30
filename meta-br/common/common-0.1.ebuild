@@ -14,6 +14,7 @@ KEYWORDS="x86 amd64"
 IUSE="-yubico -nut"
 
 DEPEND="meta-br/core
+        app-admin/eclean-kernel
         app-admin/sudo
         app-admin/syslog-ng
         app-backup/hdup
@@ -30,8 +31,10 @@ DEPEND="meta-br/core
         app-shells/zsh-completion
         mail-mta/postfix[-ldap,berkdb]
         net-analyzer/gnu-netcat
+        net-analyzer/iftop
         net-analyzer/net-snmp
         net-analyzer/netcat
+        net-analyzer/tcpdump
         net-dns/bind-tools
         net-firewall/iptables
         net-misc/ntp
@@ -54,7 +57,9 @@ DEPEND="meta-br/core
         yubico? ( sys-auth/yubico-pam[-ldap] )
         nut? ( sys-power/nut[usb] )
         sys-process/htop
-        sys-process/lsof"
+        sys-process/iotop
+        sys-process/lsof
+        "
 RDEPEND="${DEPEND}"
 
 ELOG="BR-Common : Please configure installed versions of iptables and net-snmp"
