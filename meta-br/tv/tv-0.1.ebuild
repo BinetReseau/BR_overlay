@@ -14,7 +14,6 @@ KEYWORDS="x86 amd64"
 IUSE=""
 
 DEPEND="meta-br/core
-        meta-br/svn_verify
         net-misc/xorp"
 RDEPEND="${DEPEND}"
 

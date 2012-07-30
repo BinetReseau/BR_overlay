@@ -11,15 +11,20 @@ SRC_URI=""
 LICENSE=""
 SLOT="0"
 KEYWORDS="x86 amd64"
-IUSE=""
+IUSE="layman"
 
 DEPEND="app-admin/logrotate
         app-admin/syslog-ng
-        app-portage/layman[git,-subversion]
+        app-misc/screen[multiuser]
+        layman? ( app-portage/layman[git,-subversion] )
         dev-vcs/subversion[-webdav-neon,-dso]
+        dev-vcs/git[-webdav]
+        sys-kernel/hardened-sources
+        sys-libs/gdbm[berkdb]
         sys-process/vixie-cron"
 RDEPEND="${DEPEND}"
+# sys-libs/gdbm[berkdb] required by dev-lang/python[gdbm]
 
 ELOG="BR-Core : Please configure installed versions of logrotate, syslog-ng and vixie-cron.
-BR-Core : Please import SVN standard configuration"
+BR-Core : Please import Git standard configuration"
 

@@ -11,13 +11,12 @@ SRC_URI=""
 LICENSE=""
 SLOT="0"
 KEYWORDS="x86 amd64"
-IUSE="-tv -web"
+IUSE="-tv -frankiz"
 
 DEPEND="meta-br/core
         meta-br/common
-        meta-br/svn_verify
         tv? ( meta-br/tv )
-        web? ( meta-br/web )
+        frankiz? ( meta-br/frankiz )
         "
 RDEPEND="${DEPEND}"
 
