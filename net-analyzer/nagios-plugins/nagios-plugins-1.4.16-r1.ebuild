@@ -1,10 +1,10 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-analyzer/nagios-plugins/nagios-plugins-1.4.15.ebuild,v 1.2 2011/02/22 23:30:40 hwoarang Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-analyzer/nagios-plugins/nagios-plugins-1.4.16.ebuild,v 1.1 2012/07/31 21:53:01 idl0r Exp $
 
-EAPI=1
+EAPI=4
 
-inherit eutils autotools
+inherit autotools eutils multilib user
 
 DESCRIPTION="Nagios $PV plugins - Pack of plugins to make Nagios work properly"
 HOMEPAGE="http://www.nagios.org/"
@@ -44,26 +44,25 @@ pkg_setup() {
 	enewuser nagios -1 /bin/bash /var/nagios/home nagios
 }
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-
+src_prepare() {
 	if ! use radius; then
 		EPATCH_OPTS="-p1 -d ${S}" epatch \
 		"${FILESDIR}"/nagios-plugins-1.4.10-noradius.patch
 	fi
 
-	epatch "${FILESDIR}"/${PN}-1.4.10-contrib.patch
+	# bug 366403
+	epatch "${FILESDIR}"/${P}-contrib.patch
+
 	epatch "${FILESDIR}"/${PN}-1.4.12-pgsqlconfigure.patch
-	epatch "${FILESDIR}"/${P}-vserver.patch
-	epatch "${FILESDIR}"/${P}-openldap.patch
-	epatch "${FILESDIR}"/${P}-openldap-v3.patch
-	epatch "${FILESDIR}"/${PN}-1.4.15-check-http.patch
+	epatch "${FILESDIR}"/${PN}-1.4.15-vserver.patch
+	epatch "${FILESDIR}"/${PN}-1.4.15-openldap.patch
+	epatch "${FILESDIR}"/${PN}-1.4.15-openldap-v3.patch
+	epatch "${FILESDIR}"/${P}-check-http.patch
+
 	eautoreconf
 }
 
-src_compile() {
-
+src_configure() {
 	local conf
 	if use ssl; then
 		conf="${conf} --with-openssl=/usr"
@@ -87,8 +86,6 @@ src_compile() {
 
 	# fix problem with additional -
 	sed -i -e 's:/bin/ps -axwo:/bin/ps axwo:g' config.h || die "sed failed"
-
-	emake || die "emake failed"
 }
 
 src_install() {
