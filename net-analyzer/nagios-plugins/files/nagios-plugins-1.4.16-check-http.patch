@@ -42,7 +42,7 @@
      case 'f': /* onredirect */
        if (!strcmp (optarg, "stickyport"))
          onredirect = STATE_DEPENDENT, followsticky = STICKY_HOST|STICKY_PORT;
-@@ -814,28 +826,40 @@
+@@ -814,24 +826,40 @@
    int page_len = 0;
    int result = STATE_OK;
  
@@ -82,9 +82,6 @@
 -#endif /* HAVE_SSL */
 -
 -  asprintf (&buf, "%s %s %s\r\n%s\r\n", http_method, server_url, host_name ? "HTTP/1.1" : "HTTP/1.0", user_agent);
--
--  /* tell HTTP/1.1 servers not to keep the connection alive */
--  asprintf (&buf, "%sConnection: close\r\n", buf);
 +#else
 +  /* try to connect to the host at the given port number */
 +  if (proxy_host && my_tcp_connect (proxy_host, proxy_port, &sd) != STATE_OK)
@@ -92,14 +89,14 @@
 +  else if (my_tcp_connect (server_address, server_port, &sd) != STATE_OK)
 +    die (STATE_CRITICAL, _("HTTP CRITICAL - Unable to open TCP socket\n"));
 +#endif
- 
++
 +  if (proxy_host)
 +    asprintf (&buf, "%s %s HTTP/1.0\r\n%s\r\n", http_method, server_url, user_agent);
 +  else
 +    asprintf (&buf, "%s %s %s\r\n%s\r\n", http_method, server_url, host_name ? "HTTP/1.1" : "HTTP/1.0", user_agent);
-   /* optionally send the host header info */
-   if (host_name) {
-     /*
+
+   /* tell HTTP/1.1 servers not to keep the connection alive */
+   asprintf (&buf, "%sConnection: close\r\n", buf);
 @@ -1120,6 +1144,52 @@
    return STATE_UNKNOWN;
  }
