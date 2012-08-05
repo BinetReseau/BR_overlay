@@ -17,7 +17,7 @@ DEPEND="app-admin/logrotate
         app-admin/syslog-ng
         app-misc/screen[multiuser]
         layman? ( app-portage/layman[git,-subversion] )
-        dev-vcs/subversion[-webdav-neon,-dso]
+        dev-vcs/subversion[-apache2,-webdav-neon,-dso]
         dev-vcs/git[-webdav]
         sys-apps/portage
         sys-boot/grub
