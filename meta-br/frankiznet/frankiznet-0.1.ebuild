@@ -19,6 +19,7 @@ DEPEND="meta-br/core
         dev-lang/php[apache2,cli,crypt,ctype,curl,json,mysqli,session,unicode]
         net-libs/nodejs
         net-misc/memcached
+        dev-lang/lesscss
         dev-php/pecl-imagick
         dev-php/pecl-memcache
         dev-php/smarty
