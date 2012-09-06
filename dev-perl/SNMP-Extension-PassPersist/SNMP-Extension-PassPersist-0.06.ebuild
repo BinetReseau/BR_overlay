@@ -17,5 +17,6 @@ DEPEND="dev-lang/perl
         dev-perl/Class-Accessor
         dev-perl/List-MoreUtils
         dev-perl/IO-String
+        dev-perl/SNMP-Sort-Key-OID
         virtual/perl-Module-Build"
 
