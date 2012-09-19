@@ -20,6 +20,7 @@ DEPEND="meta-br/core
         net-libs/nodejs
         net-misc/memcached
         dev-lang/lesscss
+        dev-php/pecl-apc
         dev-php/pecl-imagick
         dev-php/pecl-memcache
         dev-php/smarty
