@@ -4,7 +4,7 @@
 
 EAPI=2
 
-DESCRIPTION="Pulls in all packages required for frankiz.net installation."
+DESCRIPTION="Pulls in all packages required for dev.frankiz.net installation."
 HOMEPAGE="http://br.frankiz.net"
 SRC_URI=""
 
@@ -13,10 +13,13 @@ SLOT="0"
 KEYWORDS="x86 amd64"
 IUSE=""
 
-DEPEND="meta-br/core
+DEPEND="meta-br/frankiznet
+        app-doc/doxygen
+        dev-db/phpmyadmin
+        dev-vcs/git[cgi]
+        www-apache/mod_wsgi
+        www-apps/trac
         www-servers/apache
-        dev-db/mysql
-        dev-lang/php[apache2,cli,crypt,ctype,curl,json,mysqli,-phar,posix,session,simplexml,ssl,unicode,xml,zlib]
         net-libs/nodejs
         net-misc/memcached
         dev-lang/lesscss
