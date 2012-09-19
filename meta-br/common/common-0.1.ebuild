@@ -18,6 +18,7 @@ DEPEND="meta-br/core
         app-admin/sudo
         app-admin/syslog-ng
         app-backup/hdup
+        app-crypt/gnupg
         app-editors/nano
         app-editors/vim[vim-pager]
         app-misc/colordiff
@@ -29,6 +30,7 @@ DEPEND="meta-br/core
         app-shells/bash-completion
         app-shells/zsh
         app-shells/zsh-completion
+        dev-util/diffstat
         mail-mta/postfix[-ldap,berkdb]
         net-analyzer/gnu-netcat
         net-analyzer/iftop
