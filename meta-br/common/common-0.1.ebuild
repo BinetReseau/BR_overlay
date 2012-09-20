@@ -53,7 +53,7 @@ DEPEND="meta-br/core
         sys-apps/most
         sys-apps/pciutils
         sys-apps/sdparm
-        sys-apps/smartmontools
+        sys-apps/smartmontools[minimal]
         sys-process/htop
         sys-process/iotop
         dev-util/strace
