@@ -62,6 +62,7 @@ DEPEND="meta-br/core
         sys-process/htop
         sys-process/iotop
         sys-process/lsof
+        www-client/links
         "
 RDEPEND="${DEPEND}"
 
