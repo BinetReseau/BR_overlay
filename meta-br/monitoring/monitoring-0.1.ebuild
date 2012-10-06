@@ -23,6 +23,7 @@ DEPEND="meta-br/core
         net-analyzer/cacti-spine
         net-analyzer/hping
         net-analyzer/nagios
+        net-analyzer/nagios-br-images
         net-analyzer/nagios-plugins[jabber,ldap,nagios-dns,nagios-ntp,nagios-ping,nagios-ssh,snmp,ssl,ups]
         net-analyzer/nagios-plugins-snmp
         net-analyzer/smokeping[speedy]
