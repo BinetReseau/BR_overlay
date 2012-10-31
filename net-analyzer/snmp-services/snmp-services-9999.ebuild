@@ -13,7 +13,7 @@ LICENSE="MIT-like"
 EGIT_REPO_URI="https://github.com/BinetReseau/SNMP_Services.git"
 
 SLOT="0"
-KEYWORDS="x86 amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE="nagios snmp"
 
 DEPEND="nagios? ( dev-python/pysnmp )"
