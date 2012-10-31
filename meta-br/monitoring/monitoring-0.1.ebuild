@@ -27,6 +27,7 @@ DEPEND="meta-br/core
         net-analyzer/nagios-plugins[jabber,ldap,nagios-dns,nagios-ntp,nagios-ping,nagios-ssh,snmp,ssl,ups]
         net-analyzer/nagios-plugins-snmp
         net-analyzer/smokeping[speedy]
+        net-analyzer/snmp-services[nagios]
         www-apache/mod_proxy_html
         www-servers/apache
         "

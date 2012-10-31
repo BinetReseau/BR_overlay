@@ -36,6 +36,7 @@ DEPEND="meta-br/core
         net-analyzer/iftop
         net-analyzer/net-snmp
         net-analyzer/netcat
+        net-analyzer/snmp-services[snmp]
         net-analyzer/tcpdump
         net-analyzer/traceroute
         net-dns/bind-tools
