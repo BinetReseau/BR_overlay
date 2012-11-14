@@ -11,25 +11,14 @@
 <h2>Overlay</h2>
 <p>
 Ceci est l'overlay du BR, utilisé pour distribuer les différents paquets propres.<br />
-Certains de ces paquets sont directement incorporés à l'arbre de portage au niveau de notre miroir.<br >
 Pour les autres, il suffit d'ajouter la ligne suivante dans <em>/etc/layman/layman.cfg</em>, à la suite de la ligne "standard" :
 </p>
 <code>http://overlay.eleves.polytechnique.fr/layman.xml</code>
 
 <h3>Paquets disponibles</h3>
 Les paquets suivants sont disponibles dans cet overlay :<br />
-<small>(* indique les paquets ajoutés à directement à l'arbre de portage au niveau du miroir de l'X)</small>
 <?php
 $pkgs_dir = "/home/overlay/rsync_export";
-$merged_list = "/home/overlay/portage_merge";
-
-// Load list of merged packets
-$merged_packets = array();
-foreach(file($merged_list) as $merged) {
-	// Remove trailing "\n"
-	$merged_packets[] = trim($merged);
-}
-
 $versions = array();
 
 // Read available ebuilds
@@ -61,23 +50,9 @@ ksort($versions);
 
 echo "<ul>\n";
 foreach($versions as $packet => $pkg_versions) {
-	echo "\t<li>$packet";
-	if(in_array($packet, $merged_packets)) {
-		echo "*";
-	}
-	echo ": ";
-	$first = true;
-	foreach($pkg_versions as $version) {
-		if(!$first) {
-			echo ", ";
-		}
-		echo $version;
-		$first = false;
-	}
-	echo "</li>\n";
+	echo "\t<li>$packet: " . implode(", ", $pkg_versions) . "</li>\n";
 }
 echo "</ul>\n";
 ?>
-
 </body>
 </html>
