@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layman>
+  <overlay name = "binet_reseau"  status = "unofficial"
+  contact = "root@frankiz.polytechnique.fr"
+  src = "rsync://overlay.eleves.polytechnique.fr/br-overlay" type = "rsync">
+  <link>http://overlay.eleves.polytechnique.fr/overlay.html</link>
+  <description>Overlay du Binet Réseau</description>
+  </overlay>
+</layman>
+

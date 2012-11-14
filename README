@@ -1,0 +1,26 @@
+Travailler sur l'overlay :
+Récupérer le dépôt git:
+- git clone /home/overlay/.git en local sur heol, git clone ssh://overlay/home/overlay/.git en distant
+- git add, git commit -s pour les modifications dans le dépôt en loca
+- git push pour transmettre au dépôt, qui fera les opérations décrites plus loin automatiquement.
+
+Structure :
+- portage_merge : liste des paquets de l'overlay à incorporer de force à portage.
+			Ceci inclut : 
+				- copie des ebuilds dans /usr/portage
+				- copie de metadata/cache/CAT/PACKAGE-*.ebuild dans le cache
+
+- rsync_export : mis à jour automatiquement, contient une copie de l'overlay pour export via rsync://overlay
+- portage_export : mis à jour automatiquement, contient les données à incorporer dans /usr/portage
+
+- .git : dossier contenant l'archive de git, avec notamment le script de post-commit adéquat
+
+- bin : contient les scripts nécessaires à l'entretien de l'overlay
+
+Après un commit, le script de post-commit va :
+- envoyer un mail de commit sur root@
+- effectuer un git export vers rsync_export
+- lancer egencache sur rsync_export pour générer les metadata
+- copier dans portage_export les fichiers adaptés, pour utilisation par le script de mise à jour build_portage.sh
+
+Ne pas s'inquiéter si rsync_export ou portage_export ont pour owner un autre root, les scripts sont prévus pour prendre ça en compte.
