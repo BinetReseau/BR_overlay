@@ -55,6 +55,7 @@ DEPEND="meta-br/core
         sys-apps/pciutils
         sys-apps/sdparm
         sys-apps/smartmontools[minimal]
+        sys-apps/usbutils
         sys-process/htop
         sys-process/iotop
         dev-util/strace
