@@ -22,6 +22,7 @@ DEPEND="app-admin/logrotate
         sys-apps/portage
         sys-boot/grub
         sys-kernel/hardened-sources
+        sys-kernel/linux-firmware
         sys-libs/gdbm[berkdb]
         sys-process/vixie-cron
         "
