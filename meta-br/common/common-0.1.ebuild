@@ -50,7 +50,7 @@ DEPEND="meta-br/core
         sys-apps/lm_sensors
         sys-apps/lshw
         sys-apps/mlocate
-        sys-apps/module-init-tools
+        sys-apps/kmod
         sys-apps/most
         sys-apps/pciutils
         sys-apps/sdparm
