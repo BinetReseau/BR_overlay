@@ -16,7 +16,7 @@ LICENSE="MIT-like"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-RDEPEND="dev-python/irc"
+RDEPEND=">=dev-python/irc-5.0.1"
 
 python_install_all() {
 	distutils-r1_python_install_all
