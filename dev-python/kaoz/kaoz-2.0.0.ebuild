@@ -8,8 +8,8 @@ PYTHON_COMPAT=(python2_6 python2_7)
 inherit distutils-r1 vcs-snapshot
 
 DESCRIPTION="Free notifier for IRC."
-HOMEPAGE="https://github.com/BinetReseau/Kaoz"
-SRC_URI="https://github.com/BinetReseau/Kaoz/archive/${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/BinetReseau/kaoz"
+SRC_URI="https://github.com/BinetReseau/kaoz/archive/${PV}.tar.gz -> ${P}.tar.gz"
 PYTHON_MODNAME="kaoz"
 
 LICENSE="MIT-like"
